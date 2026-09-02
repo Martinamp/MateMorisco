@@ -450,7 +450,7 @@
     // ============================================================
 
     // ---- 🔑 PON AQUÍ TU CLAVE DE API DE GEMINI ----
-    const API_KEY = 'TU_CLAVE_AQUI';
+    const API_KEY = 'AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA';
     // =====================================================
 
     // ---- ESTADO ----
