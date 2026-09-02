@@ -744,7 +744,265 @@
 // ============================================================
 // TUTOR SOCRÁTICO CON GEMINI API
 // ============================================================
+// ============================================================
+// AGENTE SOCRÁTICO - VERSIÓN PURA (SIN DAR RESPUESTAS)
+// ============================================================
 
+// ---- El tutor NUNCA da respuestas directas ----
+const socraticQuestions = {
+    'rectangulo': [
+        "¿Qué forma tiene la figura que quieres medir?",
+        "¿Qué caracteriza a un rectángulo? ¿Cómo son sus lados?",
+        "Si tuvieras que calcular cuánto mide la superficie de un rectángulo, ¿qué harías?",
+        "¿Qué relación encuentras entre la base y la altura de un rectángulo?",
+        "¿Cómo podrías comprobar que tu cálculo del área es correcto?"
+    ],
+    'triangulo': [
+        "¿Qué tipo de triángulo tienes? ¿Cómo son sus lados y ángulos?",
+        "Si dibujas un rectángulo alrededor de un triángulo, ¿qué observas?",
+        "¿Qué relación hay entre el área del rectángulo y la del triángulo?",
+        "¿Cómo podrías dividir el triángulo para calcular su área?",
+        "¿Qué pasaría si duplicas la base del triángulo? ¿Cómo afecta al área?"
+    ],
+    'circulo': [
+        "¿Qué elementos tiene un círculo? ¿Qué es el radio? ¿Y el diámetro?",
+        "Si pudieras dividir un círculo en partes más pequeñas, ¿qué forma tendrían?",
+        "¿Has notado que el área de un círculo siempre es proporcional al cuadrado del radio?",
+        "¿Cómo podrías estimar el área de un círculo sin usar la fórmula?",
+        "¿Qué crees que representa el número π (pi) en el círculo?"
+    ],
+    'media': [
+        "¿Qué significa 'promedio' en tu vida diaria?",
+        "Si tienes varios números, ¿cómo harías para encontrar un valor que los represente a todos?",
+        "¿Qué pasos seguirías para calcular un promedio?",
+        "¿Qué crees que pasaría si un valor es mucho más grande que los demás?",
+        "¿Cómo podrías verificar que tu promedio es correcto?"
+    ],
+    'probabilidad': [
+        "¿Qué significa que algo sea 'probable' en tu vida diaria?",
+        "Si lanzas una moneda, ¿qué posibilidades hay de que caiga cara?",
+        "¿Cómo podrías medir la probabilidad de que ocurra un evento?",
+        "¿Qué relación hay entre los casos favorables y los casos posibles?",
+        "¿Cómo podrías comprobar tu cálculo de probabilidad con un experimento real?"
+    ],
+    'ecuacion': [
+        "¿Qué significa que dos expresiones sean iguales en matemáticas?",
+        "Si tienes una balanza equilibrada, ¿qué pasa si agregas peso a un lado?",
+        "¿Cómo podrías encontrar el valor de x sin que la balanza se desequilibre?",
+        "¿Qué operaciones puedes hacer para aislar la incógnita (x)?",
+        "¿Cómo podrías verificar que el valor que encontraste es correcto?"
+    ],
+    'funcion': [
+        "¿Qué significa que un valor dependa de otro en matemáticas?",
+        "Si tienes una máquina que transforma números, ¿cómo descubrirías su regla?",
+        "¿Qué relación hay entre los valores de entrada (x) y los de salida (y)?",
+        "¿Cómo podrías predecir la salida sin tener la fórmula?",
+        "¿Qué patrones observas en los valores de la función?"
+    ]
+};
+
+// ---- Preguntas generales (cuando no detecta tema) ----
+const generalQuestions = [
+    "¿Qué sabes ya sobre este tema? ¿Qué has aprendido antes que pueda ayudarte?",
+    "¿Qué información tienes y qué necesitas encontrar?",
+    "¿Has enfrentado un problema similar antes? ¿Cómo lo resolviste?",
+    "¿Qué pasos crees que deberías seguir para abordar este problema?",
+    "¿Qué conceptos o herramientas podrían ser útiles aquí?",
+    "Si pudieras dividir este problema en partes más pequeñas, ¿cómo lo harías?",
+    "¿Qué suposiciones estás haciendo sobre este problema?",
+    "¿Cómo podrías verificar si tu razonamiento es correcto?"
+];
+
+// ---- Estado de la conversación ----
+let chatState = {
+    currentTopic: null,
+    questionIndex: 0,
+    history: []
+};
+
+// ---- Detectar tema de la pregunta ----
+function detectTopicSocratic(question) {
+    const q = question.toLowerCase();
+    
+    if (q.includes('rectángulo') || q.includes('rectangular')) return 'rectangulo';
+    if (q.includes('triángulo') || q.includes('triangular')) return 'triangulo';
+    if (q.includes('círculo') || q.includes('circunferencia')) return 'circulo';
+    if (q.includes('área') || q.includes('perímetro') || q.includes('superficie')) return 'rectangulo';
+    if (q.includes('media') || q.includes('promedio')) return 'media';
+    if (q.includes('probabilidad') || q.includes('azar') || q.includes('posibilidad')) return 'probabilidad';
+    if (q.includes('ecuación') || q.includes('despejar') || q.includes('incógnita')) return 'ecuacion';
+    if (q.includes('función') || q.includes('gráfica') || q.includes('pendiente')) return 'funcion';
+    
+    return null;
+}
+
+// ---- Función principal para enviar pregunta ----
+function sendSocraticQuestion() {
+    const input = document.getElementById('userQuestion');
+    const question = input.value.trim();
+    if (!question) return;
+
+    addMessage('user', question);
+    input.value = '';
+    
+    chatState.history.push(question);
+    
+    const topic = detectTopicSocratic(question);
+    const response = generateSocraticResponse(topic);
+    
+    const typingId = addTypingIndicator();
+    setTimeout(() => {
+        removeTypingIndicator(typingId);
+        addMessage('bot', response);
+    }, 800 + Math.random() * 400);
+}
+
+// ---- Generar respuesta socrática (NUNCA da la respuesta) ----
+function generateSocraticResponse(topic) {
+    // Si el tema cambió, reiniciar el índice de preguntas
+    if (topic && topic !== chatState.currentTopic) {
+        chatState.currentTopic = topic;
+        chatState.questionIndex = 0;
+    }
+    
+    // Si hay un tema activo y preguntas disponibles
+    if (chatState.currentTopic && socraticQuestions[chatState.currentTopic]) {
+        const questions = socraticQuestions[chatState.currentTopic];
+        
+        // Si ya se hicieron todas las preguntas, cambiar el enfoque
+        if (chatState.questionIndex >= questions.length) {
+            return `🤔 **Ya hemos explorado varios aspectos de este tema.**\n\n¿Podrías ahora tratar de explicar con tus propias palabras lo que has entendido? ¿Cómo aplicarías esto a un problema nuevo?`;
+        }
+        
+        const question = questions[chatState.questionIndex];
+        chatState.questionIndex++;
+        
+        // Variar el formato según el número de pregunta
+        const prefixes = [
+            "🤔 **Reflexionemos juntos...**",
+            "🧠 **Sigamos explorando...**",
+            "💭 **Buena pregunta para pensar...**",
+            "🔍 **Profundicemos un poco más...**",
+            "📐 **Analicemos esto desde otro ángulo...**"
+        ];
+        const prefix = prefixes[chatState.questionIndex % prefixes.length];
+        
+        return `${prefix}\n\n❓ ${question}`;
+    }
+    
+    // Si no hay tema específico, usar preguntas generales
+    const randomQuestion = generalQuestions[Math.floor(Math.random() * generalQuestions.length)];
+    return `🤔 **Interesante pregunta.**\n\n❓ ${randomQuestion}`;
+}
+
+// ---- FUNCIONES DEL CHAT (YA EXISTENTES) ----
+function addMessage(sender, text) {
+    const container = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    
+    if (sender === 'user') {
+        div.innerHTML = `
+            <div style="display: flex; gap: 10px; margin-bottom: 10px; justify-content: flex-end;">
+                <div style="background: var(--accent); color: var(--bg); padding: 10px 14px; border-radius: 12px; max-width: 85%; white-space: pre-wrap;">
+                    ${text}
+                </div>
+                <div style="background: var(--card); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🧑‍🎓</div>
+            </div>
+        `;
+    } else {
+        const formattedText = text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n/g, '<br>');
+        
+        div.innerHTML = `
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
+                <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; max-width: 85%; white-space: pre-wrap;">
+                    ${formattedText}
+                </div>
+            </div>
+        `;
+    }
+    
+    container.appendChild(div);
+    scrollChatToBottom();
+}
+
+function addTypingIndicator() {
+    const container = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.id = 'typingIndicator';
+    div.innerHTML = `
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
+            <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; display: flex; gap: 4px; align-items: center;">
+                <span style="animation: dots 1.4s infinite;">●</span>
+                <span style="animation: dots 1.4s infinite 0.2s;">●</span>
+                <span style="animation: dots 1.4s infinite 0.4s;">●</span>
+            </div>
+        </div>
+    `;
+    container.appendChild(div);
+    scrollChatToBottom();
+    return 'typingIndicator';
+}
+
+function removeTypingIndicator(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+}
+
+function scrollChatToBottom() {
+    const container = document.getElementById('chatContainer');
+    container.scrollTop = container.scrollHeight;
+}
+
+function clearChat() {
+    if (confirm('¿Seguro que quieres limpiar el chat?')) {
+        const container = document.getElementById('chatMessages');
+        container.innerHTML = `
+            <div class="message bot" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
+                <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; max-width: 85%;">
+                    ¡Hola! Soy tu tutor socrático. <strong>No te daré respuestas directas</strong>, sino que te guiaré con preguntas para que tú mismo descubras las soluciones.<br><br>
+                    <strong>¿Sobre qué tema te gustaría reflexionar hoy?</strong><br>
+                    <span style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">(áreas, media, probabilidad, ecuaciones, funciones, geometría)</span>
+                </div>
+            </div>
+        `;
+        chatState = {
+            currentTopic: null,
+            questionIndex: 0,
+            history: []
+        };
+    }
+}
+
+function addExample() {
+    const examples = [
+        "¿Cómo puedo hallar el área de un rectángulo?",
+        "No entiendo cómo calcular la media de un conjunto de datos",
+        "¿Cómo se calcula la probabilidad de que salga un 6 al lanzar un dado?",
+        "¿Cómo se resuelve una ecuación lineal?",
+        "No entiendo cómo graficar una función cuadrática",
+        "¿Qué es el teorema de Pitágoras?"
+    ];
+    const example = examples[Math.floor(Math.random() * examples.length)];
+    document.getElementById('userQuestion').value = example;
+    sendSocraticQuestion();
+}
+
+// Permitir enviar con Enter
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('userQuestion');
+    if (input) {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendSocraticQuestion();
+            }
+        });
+    }
+});
 // 🔑 AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA
 const GEMINI_API_KEY = 'TU_CLAVE_AQUI'; // <-- REEMPLAZA CON TU CLAVE
 
