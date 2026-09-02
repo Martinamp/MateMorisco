@@ -3,55 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OVA: Estadística y Probabilidad | IB Apps NM</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>OVA: Estadística y Probabilidad</title>
     <style>
-        /* --- Reset & Variables --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg: #0B0D11;
             --surface: #151A21;
             --card: #1E2630;
-            --card-hover: #2A3440;
             --accent: #F5A623;
-            --accent-dim: #c4881c;
             --text-primary: #F0F2F5;
             --text-secondary: #A8B2C0;
             --border: #2D3748;
-            --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            --radius: 16px;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text-primary);
-            min-height: 100vh;
-            line-height: 1.6;
-            padding-bottom: 2rem;
-        }
-
-        /* --- Scrollbar personalizada --- */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 8px;
-        }
-
-        /* --- Navegación --- */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text-primary); padding-bottom: 2rem; }
         nav {
             background: var(--surface);
             padding: 0.75rem 1.5rem;
@@ -62,13 +26,7 @@
             overflow-x: auto;
             z-index: 1000;
             border-bottom: 2px solid var(--accent);
-            backdrop-filter: blur(6px);
-            flex-wrap: nowrap;
-            align-items: center;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent) var(--bg);
         }
-
         nav button {
             background: transparent;
             border: none;
@@ -78,129 +36,19 @@
             border-radius: 40px;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: all 0.2s ease;
             white-space: nowrap;
-            letter-spacing: 0.3px;
-            border: 1px solid transparent;
         }
-
-        nav button:hover {
-            background: var(--card);
-            color: var(--text-primary);
-            border-color: var(--accent);
-        }
-
-        nav button.active-tab {
-            background: var(--accent);
-            color: var(--bg);
-            border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(245, 166, 35, 0.25);
-        }
-
-        /* --- Secciones --- */
-        .section {
-            display: none;
-            padding: 2rem 1.5rem;
-            max-width: 1000px;
-            margin: 0 auto;
-            animation: fadeUp 0.35s ease;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(16px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Tarjetas --- */
-        .card {
-            background: var(--card);
-            padding: 1.8rem;
-            border-radius: var(--radius);
-            margin: 1rem 0;
-            border: 1px solid var(--border);
-            transition: all 0.25s ease;
-            box-shadow: var(--shadow);
-        }
-
-        .card:hover {
-            background: var(--card-hover);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .card h3 {
-            color: var(--accent);
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-
-        .card ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .card ul li {
-            padding: 0.5rem 0 0.5rem 1.8rem;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23F5A623" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>') left center no-repeat;
-            background-size: 1.2rem;
-        }
-
-        /* --- Tablas --- */
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 1.2rem;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        th, td {
-            padding: 1rem 1.2rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-            background: var(--card);
-            transition: background 0.2s;
-        }
-
-        th {
-            background: var(--surface);
-            color: var(--accent);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
-            border-bottom: 2px solid var(--accent);
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr.expandable td {
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        tr.expandable td:hover {
-            background: var(--card-hover);
-        }
-
-        tr.detail-row td {
-            background: var(--surface);
-            padding: 1.2rem;
-            font-style: italic;
-            color: var(--text-secondary);
-            border-left: 4px solid var(--accent);
-        }
-
-        /* --- Botones interactivos --- */
+        nav button:hover { background: var(--card); color: var(--text-primary); }
+        nav button.active-tab { background: var(--accent); color: var(--bg); }
+        .section { display: none; padding: 2rem 1.5rem; max-width: 1000px; margin: auto; }
+        .section.active { display: block; }
+        .card { background: var(--card); padding: 1.8rem; border-radius: 16px; margin: 1rem 0; border: 1px solid var(--border); }
+        .card h3 { color: var(--accent); margin-bottom: 0.75rem; }
+        .card ul { list-style: none; padding-left: 0; }
+        .card ul li { padding: 0.5rem 0 0.5rem 1.8rem; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23F5A623" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>') left center no-repeat; background-size: 1.2rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1.2rem; }
+        th, td { padding: 1rem 1.2rem; text-align: left; border-bottom: 1px solid var(--border); background: var(--card); }
+        th { background: var(--surface); color: var(--accent); }
         .interactive-btn {
             display: inline-block;
             background: var(--card);
@@ -210,31 +58,10 @@
             border-radius: 40px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
             margin: 0.4rem 0.4rem 0.4rem 0;
-            font-size: 0.95rem;
         }
-
-        .interactive-btn:hover {
-            background: var(--accent);
-            color: var(--bg);
-            border-color: var(--accent);
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(245, 166, 35, 0.25);
-        }
-
-        .interactive-btn.primary {
-            background: var(--accent);
-            color: var(--bg);
-            border-color: var(--accent);
-        }
-
-        .interactive-btn.primary:hover {
-            background: var(--accent-dim);
-            border-color: var(--accent-dim);
-        }
-
-        /* --- Inputs --- */
+        .interactive-btn:hover { background: var(--accent); color: var(--bg); }
+        .interactive-btn.primary { background: var(--accent); color: var(--bg); }
         input[type="number"] {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -244,976 +71,329 @@
             font-size: 1rem;
             width: 220px;
             outline: none;
-            transition: border 0.2s;
-            font-family: 'Inter', sans-serif;
         }
-
-        input[type="number"]:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.2);
-        }
-
-        .result-box {
-            background: var(--surface);
-            padding: 1.2rem 1.8rem;
-            border-radius: var(--radius);
-            margin-top: 1rem;
-            border-left: 6px solid var(--accent);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        /* --- Referentes (cards clickeables) --- */
-        .referente-card {
-            cursor: pointer;
-            transition: all 0.25s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .referente-card::after {
-            content: "↗";
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 1.5rem;
-            color: var(--accent);
-            opacity: 0.5;
-            transition: opacity 0.2s;
-        }
-
-        .referente-card:hover::after {
-            opacity: 1;
-        }
-
-        /* --- Grid para referentes --- */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.2rem;
-            margin-top: 0.5rem;
-        }
-
-        /* --- Badge --- */
-        .badge {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--bg);
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 0.2rem 0.8rem;
-            border-radius: 40px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-left: 0.5rem;
-        }
-
-        /* --- Animación para dots del chat --- */
-        @keyframes dots {
-            0%, 20% { opacity: 0.2; }
-            50% { opacity: 1; }
-            100% { opacity: 0.2; }
-        }
-
-        /* --- Responsive --- */
-        @media (max-width: 640px) {
-            nav {
-                padding: 0.5rem 1rem;
-                gap: 4px;
-            }
-            nav button {
-                font-size: 0.75rem;
-                padding: 0.4rem 0.8rem;
-            }
-            .section {
-                padding: 1rem;
-            }
-            .card {
-                padding: 1.2rem;
-            }
-            th, td {
-                padding: 0.6rem 0.8rem;
-                font-size: 0.9rem;
-            }
-            input[type="number"] {
-                width: 100%;
-                max-width: 280px;
-            }
-        }
+        .result-box { background: var(--surface); padding: 1.2rem 1.8rem; border-radius: 16px; margin-top: 1rem; border-left: 6px solid var(--accent); }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-top: 0.5rem; }
+        .badge { display: inline-block; background: var(--accent); color: var(--bg); font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.8rem; border-radius: 40px; }
+        @media (max-width: 640px) { nav button { font-size: 0.75rem; padding: 0.4rem 0.8rem; } .section { padding: 1rem; } }
+        
+        /* Chat */
+        #chatMessages { max-height: 350px; overflow-y: auto; }
+        @keyframes dots { 0%, 20% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.2; } }
+        #typingIndicator span { animation: dots 1.4s infinite; display: inline-block; }
+        #typingIndicator span:nth-child(2) { animation-delay: 0.2s; }
+        #typingIndicator span:nth-child(3) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
 
-<!-- ==================== NAVEGACIÓN ==================== -->
-<nav id="mainNav">
-    <button class="active-tab" data-section="inicio">Inicio</button>
-    <button data-section="plan">Plan Clase</button>
-    <button data-section="referentes">Referentes</button>
-    <button data-section="eval">Evaluación</button>
-    <button data-section="actividad">Actividad</button>
-    <button data-section="caso">Caso Práctico</button>
-    <button onclick="show('socratic')" style="background: var(--accent); color: var(--bg); font-weight: bold;">🤖 Tutor IA</button>
+<nav>
+    <button class="active-tab" onclick="show('inicio')">Inicio</button>
+    <button onclick="show('plan')">Plan Clase</button>
+    <button onclick="show('referentes')">Referentes</button>
+    <button onclick="show('eval')">Evaluación</button>
+    <button onclick="show('actividad')">Actividad</button>
+    <button onclick="show('caso')">Caso Práctico</button>
+    <button onclick="show('socratic')" style="background:var(--accent);color:var(--bg);font-weight:bold;">🤖 Tutor IA</button>
 </nav>
 
-<!-- ==================== SECCIONES ==================== -->
-
-<!-- --- INICIO --- -->
+<!-- INICIO -->
 <div id="inicio" class="section active">
-    <h1 style="font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem;">
-        📊 Estadística y Probabilidad
-    </h1>
-    <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
-        IB <span class="badge">Apps NM</span> — Pensamiento estadístico aplicado al mundo real.
-    </p>
+    <h1>📊 Estadística y Probabilidad</h1>
+    <p style="font-size:1.2rem;color:var(--text-secondary);">IB <span class="badge">Apps NM</span></p>
     <div class="card">
         <h3>🎯 Competencias (MEN / IB)</h3>
         <ul>
             <li>Interpretación crítica de datos estadísticos para la toma de decisiones.</li>
             <li>Cálculo y análisis de medidas de tendencia central y dispersión.</li>
             <li>Modelación de situaciones mediante distribuciones de probabilidad.</li>
-            <li>Uso de herramientas tecnológicas para el análisis de datos.</li>
         </ul>
-    </div>
-    <div class="card" style="border-color: var(--accent); background: var(--surface);">
-        <p style="display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
-            <span style="font-size: 2rem;">🧠</span>
-            <span><strong>Enfoque IB:</strong> Exploración, modelación y aplicación de la estadística en contextos locales y globales.</span>
-        </p>
     </div>
 </div>
 
-<!-- --- PLAN DE CLASE --- -->
+<!-- PLAN -->
 <div id="plan" class="section">
     <h2>📅 Plan de Clases (6 Sesiones)</h2>
-    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Haz clic en una fila para ver los detalles de la actividad.</p>
     <table>
-        <thead>
-            <tr><th>Sesión</th><th>Objetivo</th></tr>
-        </thead>
-        <tbody>
-            <tr class="expandable" onclick="toggleDetail('c1')">
-                <td><strong>1. Estadística Descriptiva</strong></td>
-                <td>Organización y representación de datos.</td>
-            </tr>
-            <tr id="c1" class="detail-row" style="display:none;">
-                <td colspan="2">📌 <strong>Actividad:</strong> Análisis de datos masivos (encuestas reales). Uso de hojas de cálculo para construir tablas de frecuencia y gráficos.</td>
-            </tr>
-            <tr class="expandable" onclick="toggleDetail('c2')">
-                <td><strong>2. Medidas de Tendencia Central</strong></td>
-                <td>Media, mediana y moda en contextos diversos.</td>
-            </tr>
-            <tr id="c2" class="detail-row" style="display:none;">
-                <td colspan="2">📌 <strong>Actividad:</strong> Comparación de salarios en diferentes sectores. Debate sobre la representatividad de la media.</td>
-            </tr>
-            <tr class="expandable" onclick="toggleDetail('c3')">
-                <td><strong>3. Dispersión y Variabilidad</strong></td>
-                <td>Rango, varianza y desviación estándar.</td>
-            </tr>
-            <tr id="c3" class="detail-row" style="display:none;">
-                <td colspan="2">📌 <strong>Actividad:</strong> Análisis de rendimiento académico. Interpretación de la desviación estándar en calificaciones.</td>
-            </tr>
-            <tr class="expandable" onclick="toggleDetail('c4')">
-                <td><strong>4. Probabilidad Básica</strong></td>
-                <td>Eventos, espacio muestral y regla de Laplace.</td>
-            </tr>
-            <tr id="c4" class="detail-row" style="display:none;">
-                <td colspan="2">📌 <strong>Actividad:</strong> Simulación de lanzamiento de dados y monedas. Cálculo de probabilidades teóricas y experimentales.</td>
-            </tr>
-            <tr class="expandable" onclick="toggleDetail('c5')">
-                <td><strong>5. Distribución Binomial</strong></td>
-                <td>Modelación de ensayos de Bernoulli.</td>
-            </tr>
-            <tr id="c5" class="detail-row" style="display:none;">
-                <td colspan="2">📌 <strong>Actividad:</strong> Control de calidad en una fábrica. Cálculo de probabilidad de piezas defectuosas.</td>
-            </tr>
-            <tr class="expandable" onclick="toggleDetail('c6')">
-                <td><strong>6. Distribución Normal</strong></td>
-                <td>Curva de campana y aplicaciones.</td>
-            </tr>
-            <tr id="c6" class="detail-row" style="display:none;">
-                <td colspan="2">📌 <strong>Actividad:</strong> Estudio de estaturas en una población. Uso de la regla 68-95-99.7.</td>
-            </tr>
-        </tbody>
+        <tr><th>Sesión</th><th>Objetivo</th></tr>
+        <tr><td>1. Estadística Descriptiva</td><td>Organización y representación de datos.</td></tr>
+        <tr><td>2. Medidas de Tendencia Central</td><td>Media, mediana y moda.</td></tr>
+        <tr><td>3. Dispersión y Variabilidad</td><td>Rango, varianza y desviación estándar.</td></tr>
+        <tr><td>4. Probabilidad Básica</td><td>Eventos y regla de Laplace.</td></tr>
+        <tr><td>5. Distribución Binomial</td><td>Modelación de ensayos de Bernoulli.</td></tr>
+        <tr><td>6. Distribución Normal</td><td>Curva de campana y aplicaciones.</td></tr>
     </table>
 </div>
 
-<!-- --- REFERENTES --- -->
+<!-- REFERENTES -->
 <div id="referentes" class="section">
     <h2>🔍 Referentes Clave</h2>
-    <p style="color: var(--text-secondary); margin-bottom: 1.2rem;">Haz clic en cada tarjeta para conocer más sobre su legado.</p>
     <div class="grid-2">
-        <div class="card referente-card" onclick="mostrarReferente('bayes')">
-            <h3>Thomas Bayes <span style="font-size: 0.8rem; color: var(--text-secondary);">(1701–1761)</span></h3>
-            <p>Padre de la inferencia estadística moderna. Su teorema permite actualizar probabilidades con nueva información, pilar de la IA.</p>
+        <div class="card" onclick="alert('Thomas Bayes: Padre de la inferencia estadística moderna.')">
+            <h3>Thomas Bayes</h3>
+            <p>Teorema que actualiza probabilidades con nueva información.</p>
         </div>
-        <div class="card referente-card" onclick="mostrarReferente('gauss')">
-            <h3>Carl Friedrich Gauss <span style="font-size: 0.8rem; color: var(--text-secondary);">(1777–1855)</span></h3>
-            <p>Desarrolló la distribución normal y el método de mínimos cuadrados, fundamentales en estadística y ciencias.</p>
+        <div class="card" onclick="alert('Carl Friedrich Gauss: Desarrolló la distribución normal.')">
+            <h3>Carl Friedrich Gauss</h3>
+            <p>Distribución normal y método de mínimos cuadrados.</p>
         </div>
-        <div class="card referente-card" onclick="mostrarReferente('pearson')">
-            <h3>Karl Pearson <span style="font-size: 0.8rem; color: var(--text-secondary);">(1857–1936)</span></h3>
-            <p>Pionero de la estadística aplicada. Introdujo el coeficiente de correlación y la prueba chi-cuadrado.</p>
+        <div class="card" onclick="alert('Karl Pearson: Pionero de la estadística aplicada.')">
+            <h3>Karl Pearson</h3>
+            <p>Coeficiente de correlación y prueba chi-cuadrado.</p>
         </div>
-        <div class="card referente-card" onclick="mostrarReferente('nightingale')">
-            <h3>Florence Nightingale <span style="font-size: 0.8rem; color: var(--text-secondary);">(1820–1910)</span></h3>
-            <p>Revolucionó la estadística sanitaria con el uso de gráficos para comunicar datos y salvar vidas.</p>
+        <div class="card" onclick="alert('Florence Nightingale: Revolucionó la estadística sanitaria.')">
+            <h3>Florence Nightingale</h3>
+            <p>Pionera en visualización de datos y salud pública.</p>
         </div>
-    </div>
-    <div id="referenteInfo" class="card" style="border-left: 6px solid var(--accent); background: var(--surface); display: none;">
-        <p id="referenteTexto" style="font-size: 1.05rem;">👤 Información del referente aparecerá aquí.</p>
     </div>
 </div>
 
-<!-- --- EVALUACIÓN --- -->
+<!-- EVALUACIÓN -->
 <div id="eval" class="section">
     <h2>📝 Simulador de Evaluación</h2>
-    <p style="color: var(--text-secondary);">Pon a prueba tus conocimientos con estas preguntas estilo IB.</p>
     <div class="card">
-        <div id="quizContainer">
-            <p style="font-weight: 600; font-size: 1.1rem;">❓ Pregunta 1: ¿Qué mide la desviación estándar?</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.8rem;">
-                <button class="interactive-btn" onclick="responderQuiz(true, '¡Correcto! La desviación estándar mide la dispersión de los datos respecto a la media.')">📊 Dispersión</button>
-                <button class="interactive-btn" onclick="responderQuiz(false, 'Incorrecto. La desviación estándar no mide el promedio, sino la variabilidad.')">📈 Promedio</button>
-                <button class="interactive-btn" onclick="responderQuiz(false, 'Incorrecto. La desviación estándar mide dispersión, no el valor central.')">🎯 Mediana</button>
-            </div>
-            <div id="quizFeedback" style="margin-top: 1.2rem; padding: 0.8rem 1.2rem; border-radius: 12px; background: var(--surface); border-left: 6px solid var(--accent); display: none;"></div>
-        </div>
+        <p><strong>❓ ¿Qué mide la desviación estándar?</strong></p>
+        <button class="interactive-btn" onclick="alert('✅ Correcto! Mide la dispersión de los datos respecto a la media.')">📊 Dispersión</button>
+        <button class="interactive-btn" onclick="alert('❌ Incorrecto.')">📈 Promedio</button>
     </div>
     <div class="card">
-        <p style="font-weight: 600; font-size: 1.1rem;">❓ Pregunta 2: En una distribución normal, ¿qué porcentaje de datos se encuentra dentro de una desviación estándar de la media?</p>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.8rem;">
-            <button class="interactive-btn" onclick="responderQuiz2(false, 'No, en una distribución normal el 68% está a ±1σ.')">50%</button>
-            <button class="interactive-btn" onclick="responderQuiz2(true, '¡Correcto! Aproximadamente el 68% de los datos está a una desviación estándar de la media (regla 68-95-99.7).')">68%</button>
-            <button class="interactive-btn" onclick="responderQuiz2(false, 'No, 95% corresponde a ±2σ.')">95%</button>
-        </div>
-        <div id="quizFeedback2" style="margin-top: 1.2rem; padding: 0.8rem 1.2rem; border-radius: 12px; background: var(--surface); border-left: 6px solid var(--accent); display: none;"></div>
+        <p><strong>❓ ¿Qué porcentaje de datos está a ±1σ en una distribución normal?</strong></p>
+        <button class="interactive-btn" onclick="alert('❌ No.')">50%</button>
+        <button class="interactive-btn" onclick="alert('✅ Correcto! El 68% de los datos está a ±1σ.')">68%</button>
+        <button class="interactive-btn" onclick="alert('❌ No.')">95%</button>
     </div>
 </div>
 
-<!-- --- ACTIVIDAD (Calculadora) --- -->
+<!-- ACTIVIDAD -->
 <div id="actividad" class="section">
     <h2>🧮 Calculadora de Probabilidad</h2>
-    <p style="color: var(--text-secondary);">Ingresa la probabilidad de un evento (entre 0 y 1) y calcula su complementario.</p>
     <div class="card">
-        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
-            <input type="number" id="probInput" placeholder="Ej: 0.7" min="0" max="1" step="0.01">
-            <button class="interactive-btn primary" onclick="calcularComplemento()">Calcular Complementario</button>
-        </div>
-        <div id="resultadoProb" class="result-box" style="display: none;">
-            <span id="resultadoTexto"></span>
-        </div>
-        <div style="margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.8rem;">
-            <button class="interactive-btn" onclick="ejemploProb(0.3)">🎲 Ejemplo: P(éxito)=0.3</button>
-            <button class="interactive-btn" onclick="ejemploProb(0.85)">🏀 Ejemplo: P(anotar)=0.85</button>
-        </div>
+        <input type="number" id="probInput" placeholder="Ej: 0.7" min="0" max="1" step="0.01">
+        <button class="interactive-btn primary" onclick="calcularComplemento()">Calcular Complementario</button>
+        <div id="resultadoProb" class="result-box" style="display:none;"><span id="resultadoTexto"></span></div>
     </div>
 </div>
 
-<!-- --- CASO PRÁCTICO --- -->
+<!-- CASO -->
 <div id="caso" class="section">
     <h2>🏢 Caso: Gestión de Riesgo en Seguros</h2>
-    <p style="color: var(--text-secondary);">Una aseguradora quiere predecir la frecuencia de accidentes para fijar primas justas.</p>
     <div class="card">
-        <h3>📌 Paso 1: Selección del modelo</h3>
-        <p>¿Qué modelo estadístico usarías para modelar el número de accidentes por semana?</p>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.8rem;">
-            <button class="interactive-btn" onclick="casoRespuesta('Distribución de Poisson', '✅ Excelente. La distribución de Poisson es ideal para contar eventos raros en un intervalo fijo.')">📊 Distribución de Poisson</button>
-            <button class="interactive-btn" onclick="casoRespuesta('Distribución Normal', '⚠️ La normal es continua y simétrica, pero para conteos de accidentes (discretos) es mejor Poisson o binomial.')">📈 Distribución Normal</button>
-            <button class="interactive-btn" onclick="casoRespuesta('Distribución Binomial', '🤔 Binomial requiere un número fijo de ensayos. Para accidentes en tiempo continuo, Poisson es más adecuado.')">🎯 Distribución Binomial</button>
-        </div>
-        <div id="casoFeedback" class="result-box" style="display: none; margin-top: 1.2rem;"></div>
-    </div>
-    <div class="card">
-        <h3>📌 Paso 2: Análisis de datos históricos</h3>
-        <p>La aseguradora tiene registros: promedio de 3 accidentes por semana. ¿Cuál es la probabilidad de que ocurran exactamente 2 accidentes en una semana?</p>
-        <button class="interactive-btn primary" onclick="casoPoisson()">Calcular con Poisson (λ=3, k=2)</button>
-        <div id="poissonResult" class="result-box" style="display: none; margin-top: 1rem;"></div>
+        <h3>📌 Modelo para accidentes</h3>
+        <button class="interactive-btn" onclick="alert('✅ Poisson es ideal para eventos raros.')">Distribución de Poisson</button>
+        <button class="interactive-btn" onclick="alert('⚠️ La normal es continua.')">Distribución Normal</button>
+        <button class="interactive-btn" onclick="alert('⚠️ Binomial requiere ensayos fijos.')">Distribución Binomial</button>
     </div>
 </div>
 
-<!-- ==================== AGENTE SOCRÁTICO ==================== -->
+<!-- TUTOR SOCRÁTICO -->
 <div id="socratic" class="section">
-    <h2>🤖 Tutor Socrático de Matemáticas</h2>
+    <h2>🤖 Tutor Socrático</h2>
     <div class="card">
-        <p style="color: var(--text-secondary);">
-            Este tutor no te dará respuestas directas. En su lugar, te guiará con preguntas 
-            para que descubras las soluciones por ti mismo. ¡Así es como realmente se aprende!
-        </p>
-        
-        <div style="margin: 15px 0;">
-            <div style="background: var(--surface); border-radius: 12px; padding: 15px; max-height: 350px; overflow-y: auto;" id="chatContainer">
-                <div id="chatMessages">
-                    <div class="message bot" style="display: flex; gap: 10px; margin-bottom: 10px;">
-                        <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
-                        <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; max-width: 85%;">
-                            ¡Hola! Soy tu tutor socrático. No te daré respuestas directas, pero te haré preguntas para que tú mismo descubras las soluciones. 
-                            <br><br>
-                            <strong>¿Sobre qué tema te gustaría reflexionar hoy?</strong> 
-                            <span style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">(álgebra, geometría, funciones, trigonometría, estadística, probabilidad)</span>
-                        </div>
+        <p style="color:var(--text-secondary);">No doy respuestas directas. Te guío con preguntas para que descubras por ti mismo.</p>
+        <div style="background:var(--surface);border-radius:12px;padding:15px;max-height:350px;overflow-y:auto;" id="chatContainer">
+            <div id="chatMessages">
+                <div style="display:flex;gap:10px;margin-bottom:10px;">
+                    <div style="background:var(--accent);color:var(--bg);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">🤖</div>
+                    <div style="background:var(--card);padding:10px 14px;border-radius:12px;max-width:85%;">
+                        ¡Hola! ¿Sobre qué tema te gustaría reflexionar?<br>
+                        <span style="font-size:0.8rem;color:var(--text-secondary);">(áreas, media, probabilidad, ecuaciones, funciones)</span>
                     </div>
                 </div>
             </div>
-            
-            <div style="display: flex; gap: 10px; margin-top: 10px;">
-                <input type="text" id="userQuestion" placeholder="Escribe tu pregunta o problema..." 
-                       style="flex: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: inherit; font-size: 1rem;">
-                <button onclick="sendSocraticQuestion()" class="interactive-btn primary" style="white-space: nowrap;">Enviar ➤</button>
-            </div>
-            
-            <div style="margin-top: 8px;">
-                <button onclick="addExample()" style="background: transparent; border: none; color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; text-decoration: underline;">
-                    📝 Probar con un ejemplo
-                </button>
-                <button onclick="clearChat()" style="background: transparent; border: none; color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; text-decoration: underline; margin-left: 15px;">
-                    🗑️ Limpiar chat
-                </button>
-            </div>
         </div>
-        
-        <div style="background: var(--surface); border-radius: 8px; padding: 12px; border-left: 4px solid var(--accent);">
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">
-                💡 <strong>Consejo:</strong> Este tutor sigue el método socrático. No te dará respuestas directas, 
-                sino que te guiará con preguntas para que desarrolles tu propio razonamiento.
-            </p>
+        <div style="display:flex;gap:10px;margin-top:10px;">
+            <input type="text" id="userQuestion" placeholder="Escribe tu pregunta..." style="flex:1;padding:12px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-primary);font-size:1rem;">
+            <button onclick="sendQuestion()" class="interactive-btn primary">Enviar ➤</button>
+        </div>
+        <div style="margin-top:8px;">
+            <button onclick="addExampleQuestion()" style="background:transparent;border:none;color:var(--text-secondary);font-size:0.8rem;cursor:pointer;text-decoration:underline;">📝 Ejemplo</button>
+            <button onclick="clearChat()" style="background:transparent;border:none;color:var(--text-secondary);font-size:0.8rem;cursor:pointer;text-decoration:underline;margin-left:15px;">🗑️ Limpiar</button>
         </div>
     </div>
 </div>
 
-<!-- ==================== SCRIPTS ==================== -->
 <script>
-    // ---- Navegación ----
-    document.querySelectorAll('#mainNav button').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('#mainNav button').forEach(b => b.classList.remove('active-tab'));
-            this.classList.add('active-tab');
-            const sectionId = this.dataset.section || this.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
-            if (sectionId) {
-                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                document.getElementById(sectionId).classList.add('active');
-            }
-        });
-    });
+// ---- Navegación ----
+function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-tab'));
+}
 
-    // ---- Toggle detalles de tabla ----
-    function toggleDetail(id) {
-        const row = document.getElementById(id);
-        if (row) {
-            row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
-        }
+// ---- Calculadora ----
+function calcularComplemento() {
+    let val = parseFloat(document.getElementById('probInput').value);
+    let div = document.getElementById('resultadoProb');
+    let txt = document.getElementById('resultadoTexto');
+    if (isNaN(val) || val < 0 || val > 1) {
+        div.style.display = 'block';
+        txt.innerHTML = '⚠️ Ingresa un valor entre 0 y 1.';
+        return;
     }
+    div.style.display = 'block';
+    txt.innerHTML = `Complementario: ${(1 - val).toFixed(3)} (${((1 - val) * 100).toFixed(1)}%)`;
+}
 
-    // ---- Referentes ----
-    const referentesInfo = {
-        bayes: '👤 <strong>Thomas Bayes</strong> (1701–1761): Clérigo y matemático británico. Su famoso teorema permite actualizar la probabilidad de una hipótesis a medida que se obtiene nueva evidencia. Es la base de la inferencia bayesiana, usada hoy en IA, machine learning y filtros de spam.',
-        gauss: '👤 <strong>Carl Friedrich Gauss</strong> (1777–1855): Matemático alemán, "príncipe de las matemáticas". Desarrolló la distribución normal (campana de Gauss) y el método de mínimos cuadrados, esenciales en estadística, física y ciencias sociales.',
-        pearson: '👤 <strong>Karl Pearson</strong> (1857–1936): Estadístico británico, fundador de la estadística matemática moderna. Introdujo el coeficiente de correlación de Pearson, la prueba chi-cuadrado y el concepto de desviación estándar.',
-        nightingale: '👤 <strong>Florence Nightingale</strong> (1820–1910): Enfermera y estadística británica. Pionera en la visualización de datos, usó gráficos de rosa (polar) para mostrar las causas de mortalidad en la guerra de Crimea, revolucionando la salud pública.'
-    };
-
-    function mostrarReferente(key) {
-        const infoDiv = document.getElementById('referenteInfo');
-        const texto = document.getElementById('referenteTexto');
-        if (referentesInfo[key]) {
-            texto.innerHTML = referentesInfo[key];
-            infoDiv.style.display = 'block';
-        }
-    }
-
-    // ---- Quiz 1 ----
-    function responderQuiz(acierto, mensaje) {
-        const feedback = document.getElementById('quizFeedback');
-        feedback.style.display = 'block';
-        feedback.style.borderLeftColor = acierto ? '#4CAF50' : '#f44336';
-        feedback.innerHTML = acierto ? '✅ ' + mensaje : '❌ ' + mensaje;
-        const container = document.getElementById('quizContainer');
-        const btns = container.querySelectorAll('.interactive-btn');
-        btns.forEach(b => b.disabled = true);
-    }
-
-    // ---- Quiz 2 ----
-    function responderQuiz2(acierto, mensaje) {
-        const feedback = document.getElementById('quizFeedback2');
-        feedback.style.display = 'block';
-        feedback.style.borderLeftColor = acierto ? '#4CAF50' : '#f44336';
-        feedback.innerHTML = acierto ? '✅ ' + mensaje : '❌ ' + mensaje;
-        const btns = document.querySelectorAll('#eval .card:last-child .interactive-btn');
-        btns.forEach(b => b.disabled = true);
-    }
-
-    // ---- Calculadora de Probabilidad ----
-    function calcularComplemento() {
-        const input = document.getElementById('probInput');
-        const val = parseFloat(input.value);
-        const resultDiv = document.getElementById('resultadoProb');
-        const textSpan = document.getElementById('resultadoTexto');
-
-        if (isNaN(val) || val < 0 || val > 1) {
-            resultDiv.style.display = 'block';
-            textSpan.innerHTML = '⚠️ Ingresa un valor entre 0 y 1.';
-            resultDiv.style.borderLeftColor = '#f44336';
-            return;
-        }
-
-        const complemento = 1 - val;
-        resultDiv.style.display = 'block';
-        resultDiv.style.borderLeftColor = '#4CAF50';
-        textSpan.innerHTML = `P(evento) = ${val.toFixed(3)}  →  P(complementario) = ${complemento.toFixed(3)} (${(complemento * 100).toFixed(1)}%)`;
-    }
-
-    function ejemploProb(val) {
-        document.getElementById('probInput').value = val;
-        calcularComplemento();
-    }
-
-    // ---- Caso Práctico ----
-    function casoRespuesta(modelo, mensaje) {
-        const feedback = document.getElementById('casoFeedback');
-        feedback.style.display = 'block';
-        feedback.innerHTML = `📌 <strong>${modelo}</strong><br>${mensaje}`;
-        feedback.style.borderLeftColor = modelo === 'Distribución de Poisson' ? '#4CAF50' : '#f44336';
-    }
-
-    function casoPoisson() {
-        const lambda = 3;
-        const k = 2;
-        const e = Math.exp(1);
-        const prob = (Math.pow(e, -lambda) * Math.pow(lambda, k)) / 2;
-        const resultDiv = document.getElementById('poissonResult');
-        resultDiv.style.display = 'block';
-        resultDiv.style.borderLeftColor = '#4CAF50';
-        resultDiv.innerHTML = `📊 P(X = 2) = (e⁻³ · 3²) / 2! = ${prob.toFixed(4)} → <strong>${(prob * 100).toFixed(2)}%</strong>`;
-    }
-
-    // ============================================================
-    // AGENTE SOCRÁTICO - Tutor de Matemáticas
-    // ============================================================
-
-    const socraticResponses = {
-        'estadistica': {
-            validation: "¡Excelente pregunta! La estadística puede parecer compleja al principio, pero es una herramienta muy poderosa.",
-            hint: "Piensa en la estadística como una forma de resumir mucha información en números que nos cuentan una historia.",
-            question: "¿Qué crees que representa la media aritmética de un conjunto de datos en la vida real?"
-        },
-        'probabilidad': {
-            validation: "¡La probabilidad es fascinante! Es la forma que tenemos de medir la incertidumbre.",
-            hint: "Imagina que lanzas una moneda al aire. ¿Qué posibilidades hay de que caiga cara?",
-            question: "¿Por qué crees que la probabilidad siempre está entre 0 y 1?"
-        },
-        'geometria': {
-            validation: "La geometría está en todas partes, desde un edificio hasta un videojuego.",
-            hint: "Cuando veas una figura geométrica, pregúntate: ¿qué forma tiene? ¿Qué propiedades tiene?",
-            question: "Si tienes un triángulo, ¿qué relación hay entre sus ángulos internos?"
-        },
-        'funciones': {
-            validation: "Las funciones son como máquinas: reciben algo y devuelven algo transformado.",
-            hint: "Piensa en una función como una receta de cocina: ingredientes (entrada) → proceso → plato (salida).",
-            question: "¿Qué significa que una función sea 'lineal'? ¿Cómo se ve en una gráfica?"
-        },
-        'trigonometria': {
-            validation: "La trigonometría puede parecer difícil, pero es solo la relación entre los lados y ángulos de un triángulo.",
-            hint: "El seno, coseno y tangente son como 'recetas' para encontrar medidas que no vemos directamente.",
-            question: "¿Qué relación crees que hay entre el seno y el coseno de un mismo ángulo?"
-        },
-        'algebra': {
-            validation: "El álgebra es como un juego de misterio donde tienes que encontrar el valor de la incógnita.",
-            hint: "Piensa en la ecuación como una balanza: lo que hagas de un lado, debes hacerlo del otro para mantener el equilibrio.",
-            question: "¿Qué significa 'despejar' una variable en una ecuación?"
-        }
-    };
-
-    const defaultResponses = [
-        {
-            validation: "¡Me encanta tu curiosidad! Esa es la primera habilidad de un buen matemático.",
-            hint: "A veces, el primer paso es entender qué nos están pidiendo realmente.",
-            question: "¿Podrías explicarme con tus propias palabras qué crees que te pide el problema?"
-        },
-        {
-            validation: "Es normal sentirse perdido al principio. Hasta los matemáticos más grandes empezaron desde cero.",
-            hint: "Divide el problema en partes más pequeñas. Resuelve lo que puedas y ve paso a paso.",
-            question: "¿Cuál crees que sería el primer paso para resolver este problema?"
-        },
-        {
-            validation: "¡Bien! Ya estás pensando como un matemático. El error es parte del proceso.",
-            hint: "Pregúntate: ¿qué información tengo y qué necesito encontrar?",
-            question: "¿Qué herramientas o fórmulas crees que podrían ayudarte aquí?"
-        }
-    ];
-
-    let messageCount = 0;
-// ============================================================
-// TUTOR SOCRÁTICO CON GEMINI API
-// ============================================================
-// ============================================================
-// AGENTE SOCRÁTICO - VERSIÓN PURA (SIN DAR RESPUESTAS)
-// ============================================================
-
-// ---- El tutor NUNCA da respuestas directas ----
-const socraticQuestions = {
+// ---- TUTOR SOCRÁTICO (NUNCA DA RESPUESTAS DIRECTAS) ----
+const preguntasSocraticas = {
+    'area': [
+        "¿Qué figura geométrica estás analizando?",
+        "¿Qué caracteriza a esa figura? ¿Cómo son sus lados?",
+        "Si tuvieras que calcular su superficie, ¿qué pasos seguirías?",
+        "¿Qué relación encuentras entre las medidas de la figura?",
+        "¿Cómo podrías comprobar tu resultado?"
+    ],
     'rectangulo': [
-        "¿Qué forma tiene la figura que quieres medir?",
-        "¿Qué caracteriza a un rectángulo? ¿Cómo son sus lados?",
-        "Si tuvieras que calcular cuánto mide la superficie de un rectángulo, ¿qué harías?",
-        "¿Qué relación encuentras entre la base y la altura de un rectángulo?",
-        "¿Cómo podrías comprobar que tu cálculo del área es correcto?"
-    ],
-    'triangulo': [
-        "¿Qué tipo de triángulo tienes? ¿Cómo son sus lados y ángulos?",
-        "Si dibujas un rectángulo alrededor de un triángulo, ¿qué observas?",
-        "¿Qué relación hay entre el área del rectángulo y la del triángulo?",
-        "¿Cómo podrías dividir el triángulo para calcular su área?",
-        "¿Qué pasaría si duplicas la base del triángulo? ¿Cómo afecta al área?"
-    ],
-    'circulo': [
-        "¿Qué elementos tiene un círculo? ¿Qué es el radio? ¿Y el diámetro?",
-        "Si pudieras dividir un círculo en partes más pequeñas, ¿qué forma tendrían?",
-        "¿Has notado que el área de un círculo siempre es proporcional al cuadrado del radio?",
-        "¿Cómo podrías estimar el área de un círculo sin usar la fórmula?",
-        "¿Qué crees que representa el número π (pi) en el círculo?"
+        "¿Qué es un rectángulo? ¿Cómo son sus lados?",
+        "Si dibujas un rectángulo, ¿qué medidas necesitas?",
+        "¿Cómo podrías calcular cuánto mide su superficie?",
+        "¿Qué crees que pasa si multiplicas la base por la altura?"
     ],
     'media': [
         "¿Qué significa 'promedio' en tu vida diaria?",
-        "Si tienes varios números, ¿cómo harías para encontrar un valor que los represente a todos?",
-        "¿Qué pasos seguirías para calcular un promedio?",
-        "¿Qué crees que pasaría si un valor es mucho más grande que los demás?",
-        "¿Cómo podrías verificar que tu promedio es correcto?"
+        "Si tienes varios números, ¿cómo harías para encontrar un valor que los represente?",
+        "¿Qué pasos seguirías para calcular un promedio?"
     ],
     'probabilidad': [
-        "¿Qué significa que algo sea 'probable' en tu vida diaria?",
-        "Si lanzas una moneda, ¿qué posibilidades hay de que caiga cara?",
-        "¿Cómo podrías medir la probabilidad de que ocurra un evento?",
-        "¿Qué relación hay entre los casos favorables y los casos posibles?",
-        "¿Cómo podrías comprobar tu cálculo de probabilidad con un experimento real?"
+        "¿Qué significa que algo sea 'probable'?",
+        "Si lanzas una moneda, ¿qué posibilidades hay?",
+        "¿Cómo podrías medir la probabilidad de un evento?"
     ],
     'ecuacion': [
-        "¿Qué significa que dos expresiones sean iguales en matemáticas?",
+        "¿Qué significa que dos cosas sean iguales?",
         "Si tienes una balanza equilibrada, ¿qué pasa si agregas peso a un lado?",
-        "¿Cómo podrías encontrar el valor de x sin que la balanza se desequilibre?",
-        "¿Qué operaciones puedes hacer para aislar la incógnita (x)?",
-        "¿Cómo podrías verificar que el valor que encontraste es correcto?"
-    ],
-    'funcion': [
-        "¿Qué significa que un valor dependa de otro en matemáticas?",
-        "Si tienes una máquina que transforma números, ¿cómo descubrirías su regla?",
-        "¿Qué relación hay entre los valores de entrada (x) y los de salida (y)?",
-        "¿Cómo podrías predecir la salida sin tener la fórmula?",
-        "¿Qué patrones observas en los valores de la función?"
+        "¿Cómo podrías encontrar el valor de x?"
     ]
 };
 
-// ---- Preguntas generales (cuando no detecta tema) ----
-const generalQuestions = [
-    "¿Qué sabes ya sobre este tema? ¿Qué has aprendido antes que pueda ayudarte?",
+const preguntasGenerales = [
+    "¿Qué sabes ya sobre este tema?",
     "¿Qué información tienes y qué necesitas encontrar?",
-    "¿Has enfrentado un problema similar antes? ¿Cómo lo resolviste?",
-    "¿Qué pasos crees que deberías seguir para abordar este problema?",
-    "¿Qué conceptos o herramientas podrían ser útiles aquí?",
-    "Si pudieras dividir este problema en partes más pequeñas, ¿cómo lo harías?",
-    "¿Qué suposiciones estás haciendo sobre este problema?",
-    "¿Cómo podrías verificar si tu razonamiento es correcto?"
+    "¿Has enfrentado un problema similar antes?",
+    "¿Qué pasos crees que deberías seguir?"
 ];
 
-// ---- Estado de la conversación ----
-let chatState = {
-    currentTopic: null,
-    questionIndex: 0,
-    history: []
-};
+let estadoChat = { tema: null, indice: 0 };
 
-// ---- Detectar tema de la pregunta ----
-function detectTopicSocratic(question) {
-    const q = question.toLowerCase();
-    
+function detectarTema(pregunta) {
+    let q = pregunta.toLowerCase();
     if (q.includes('rectángulo') || q.includes('rectangular')) return 'rectangulo';
-    if (q.includes('triángulo') || q.includes('triangular')) return 'triangulo';
-    if (q.includes('círculo') || q.includes('circunferencia')) return 'circulo';
-    if (q.includes('área') || q.includes('perímetro') || q.includes('superficie')) return 'rectangulo';
+    if (q.includes('área') || q.includes('superficie') || q.includes('perímetro')) return 'area';
     if (q.includes('media') || q.includes('promedio')) return 'media';
     if (q.includes('probabilidad') || q.includes('azar') || q.includes('posibilidad')) return 'probabilidad';
     if (q.includes('ecuación') || q.includes('despejar') || q.includes('incógnita')) return 'ecuacion';
-    if (q.includes('función') || q.includes('gráfica') || q.includes('pendiente')) return 'funcion';
-    
     return null;
 }
 
-// ---- Función principal para enviar pregunta ----
-function sendSocraticQuestion() {
-    const input = document.getElementById('userQuestion');
-    const question = input.value.trim();
-    if (!question) return;
+function sendQuestion() {
+    let input = document.getElementById('userQuestion');
+    let pregunta = input.value.trim();
+    if (!pregunta) return;
 
-    addMessage('user', question);
+    agregarMensaje('user', pregunta);
     input.value = '';
-    
-    chatState.history.push(question);
-    
-    const topic = detectTopicSocratic(question);
-    const response = generateSocraticResponse(topic);
-    
-    const typingId = addTypingIndicator();
+
+    let tema = detectarTema(pregunta);
+    let respuesta = generarRespuesta(tema);
+
+    let typingId = mostrarEscritura();
     setTimeout(() => {
-        removeTypingIndicator(typingId);
-        addMessage('bot', response);
-    }, 800 + Math.random() * 400);
+        eliminarEscritura(typingId);
+        agregarMensaje('bot', respuesta);
+    }, 700);
 }
 
-// ---- Generar respuesta socrática (NUNCA da la respuesta) ----
-function generateSocraticResponse(topic) {
-    // Si el tema cambió, reiniciar el índice de preguntas
-    if (topic && topic !== chatState.currentTopic) {
-        chatState.currentTopic = topic;
-        chatState.questionIndex = 0;
+function generarRespuesta(tema) {
+    if (tema && tema !== estadoChat.tema) {
+        estadoChat.tema = tema;
+        estadoChat.indice = 0;
     }
-    
-    // Si hay un tema activo y preguntas disponibles
-    if (chatState.currentTopic && socraticQuestions[chatState.currentTopic]) {
-        const questions = socraticQuestions[chatState.currentTopic];
-        
-        // Si ya se hicieron todas las preguntas, cambiar el enfoque
-        if (chatState.questionIndex >= questions.length) {
-            return `🤔 **Ya hemos explorado varios aspectos de este tema.**\n\n¿Podrías ahora tratar de explicar con tus propias palabras lo que has entendido? ¿Cómo aplicarías esto a un problema nuevo?`;
+
+    if (estadoChat.tema && preguntasSocraticas[estadoChat.tema]) {
+        let preguntas = preguntasSocraticas[estadoChat.tema];
+        if (estadoChat.indice < preguntas.length) {
+            let p = preguntas[estadoChat.indice];
+            estadoChat.indice++;
+            let prefijos = ["🤔", "🧠", "💭", "🔍", "📐"];
+            return `${prefijos[estadoChat.indice % prefijos.length]} ${p}`;
+        } else {
+            return `🌟 ¡Vas muy bien! ¿Podrías explicar con tus propias palabras lo que has entendido?`;
         }
-        
-        const question = questions[chatState.questionIndex];
-        chatState.questionIndex++;
-        
-        // Variar el formato según el número de pregunta
-        const prefixes = [
-            "🤔 **Reflexionemos juntos...**",
-            "🧠 **Sigamos explorando...**",
-            "💭 **Buena pregunta para pensar...**",
-            "🔍 **Profundicemos un poco más...**",
-            "📐 **Analicemos esto desde otro ángulo...**"
-        ];
-        const prefix = prefixes[chatState.questionIndex % prefixes.length];
-        
-        return `${prefix}\n\n❓ ${question}`;
     }
-    
-    // Si no hay tema específico, usar preguntas generales
-    const randomQuestion = generalQuestions[Math.floor(Math.random() * generalQuestions.length)];
-    return `🤔 **Interesante pregunta.**\n\n❓ ${randomQuestion}`;
+
+    let p = preguntasGenerales[Math.floor(Math.random() * preguntasGenerales.length)];
+    return `🤔 ${p}`;
 }
 
-// ---- FUNCIONES DEL CHAT (YA EXISTENTES) ----
-function addMessage(sender, text) {
-    const container = document.getElementById('chatMessages');
-    const div = document.createElement('div');
-    
+function agregarMensaje(sender, texto) {
+    let container = document.getElementById('chatMessages');
+    let div = document.createElement('div');
     if (sender === 'user') {
-        div.innerHTML = `
-            <div style="display: flex; gap: 10px; margin-bottom: 10px; justify-content: flex-end;">
-                <div style="background: var(--accent); color: var(--bg); padding: 10px 14px; border-radius: 12px; max-width: 85%; white-space: pre-wrap;">
-                    ${text}
-                </div>
-                <div style="background: var(--card); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🧑‍🎓</div>
-            </div>
-        `;
+        div.innerHTML = `<div style="display:flex;gap:10px;margin-bottom:10px;justify-content:flex-end;">
+            <div style="background:var(--accent);color:var(--bg);padding:10px 14px;border-radius:12px;max-width:85%;">${texto}</div>
+            <div style="background:var(--card);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">🧑‍🎓</div>
+        </div>`;
     } else {
-        const formattedText = text
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\n/g, '<br>');
-        
-        div.innerHTML = `
-            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
-                <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; max-width: 85%; white-space: pre-wrap;">
-                    ${formattedText}
-                </div>
-            </div>
-        `;
+        div.innerHTML = `<div style="display:flex;gap:10px;margin-bottom:10px;">
+            <div style="background:var(--accent);color:var(--bg);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">🤖</div>
+            <div style="background:var(--card);padding:10px 14px;border-radius:12px;max-width:85%;">${texto}</div>
+        </div>`;
     }
-    
     container.appendChild(div);
-    scrollChatToBottom();
+    document.getElementById('chatContainer').scrollTop = container.scrollHeight;
 }
 
-function addTypingIndicator() {
-    const container = document.getElementById('chatMessages');
-    const div = document.createElement('div');
+function mostrarEscritura() {
+    let container = document.getElementById('chatMessages');
+    let div = document.createElement('div');
     div.id = 'typingIndicator';
-    div.innerHTML = `
-        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-            <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
-            <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; display: flex; gap: 4px; align-items: center;">
-                <span style="animation: dots 1.4s infinite;">●</span>
-                <span style="animation: dots 1.4s infinite 0.2s;">●</span>
-                <span style="animation: dots 1.4s infinite 0.4s;">●</span>
-            </div>
+    div.innerHTML = `<div style="display:flex;gap:10px;margin-bottom:10px;">
+        <div style="background:var(--accent);color:var(--bg);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">🤖</div>
+        <div style="background:var(--card);padding:10px 14px;border-radius:12px;display:flex;gap:4px;align-items:center;">
+            <span>●</span><span>●</span><span>●</span>
         </div>
-    `;
+    </div>`;
     container.appendChild(div);
-    scrollChatToBottom();
+    document.getElementById('chatContainer').scrollTop = container.scrollHeight;
     return 'typingIndicator';
 }
 
-function removeTypingIndicator(id) {
-    const el = document.getElementById(id);
+function eliminarEscritura(id) {
+    let el = document.getElementById(id);
     if (el) el.remove();
 }
 
-function scrollChatToBottom() {
-    const container = document.getElementById('chatContainer');
-    container.scrollTop = container.scrollHeight;
-}
-
 function clearChat() {
-    if (confirm('¿Seguro que quieres limpiar el chat?')) {
-        const container = document.getElementById('chatMessages');
-        container.innerHTML = `
-            <div class="message bot" style="display: flex; gap: 10px; margin-bottom: 10px;">
-                <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
-                <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; max-width: 85%;">
-                    ¡Hola! Soy tu tutor socrático. <strong>No te daré respuestas directas</strong>, sino que te guiaré con preguntas para que tú mismo descubras las soluciones.<br><br>
-                    <strong>¿Sobre qué tema te gustaría reflexionar hoy?</strong><br>
-                    <span style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">(áreas, media, probabilidad, ecuaciones, funciones, geometría)</span>
-                </div>
+    if (!confirm('¿Limpiar chat?')) return;
+    document.getElementById('chatMessages').innerHTML = `
+        <div style="display:flex;gap:10px;margin-bottom:10px;">
+            <div style="background:var(--accent);color:var(--bg);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">🤖</div>
+            <div style="background:var(--card);padding:10px 14px;border-radius:12px;max-width:85%;">
+                ¡Hola! ¿Sobre qué tema te gustaría reflexionar?<br>
+                <span style="font-size:0.8rem;color:var(--text-secondary);">(áreas, media, probabilidad, ecuaciones, funciones)</span>
             </div>
-        `;
-        chatState = {
-            currentTopic: null,
-            questionIndex: 0,
-            history: []
-        };
-    }
+        </div>
+    `;
+    estadoChat = { tema: null, indice: 0 };
 }
 
-function addExample() {
-    const examples = [
+function addExampleQuestion() {
+    const ejemplos = [
         "¿Cómo puedo hallar el área de un rectángulo?",
-        "No entiendo cómo calcular la media de un conjunto de datos",
-        "¿Cómo se calcula la probabilidad de que salga un 6 al lanzar un dado?",
-        "¿Cómo se resuelve una ecuación lineal?",
-        "No entiendo cómo graficar una función cuadrática",
-        "¿Qué es el teorema de Pitágoras?"
+        "No entiendo cómo calcular la media",
+        "¿Cómo se calcula la probabilidad?",
+        "¿Cómo se resuelve una ecuación?"
     ];
-    const example = examples[Math.floor(Math.random() * examples.length)];
-    document.getElementById('userQuestion').value = example;
-    sendSocraticQuestion();
+    document.getElementById('userQuestion').value = ejemplos[Math.floor(Math.random() * ejemplos.length)];
+    sendQuestion();
 }
 
-// Permitir enviar con Enter
+// Enter para enviar
 document.addEventListener('DOMContentLoaded', function() {
-    const input = document.getElementById('userQuestion');
-    if (input) {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendSocraticQuestion();
-            }
-        });
-    }
-});
-// 🔑 AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA
-const GEMINI_API_KEY = 'TU_CLAVE_AQUI'; // <-- REEMPLAZA CON TU CLAVE
-
-async function sendSocraticQuestion() {
-    const input = document.getElementById('userQuestion');
-    const question = input.value.trim();
-    if (!question) return;
-
-    addMessage('user', question);
-    input.value = '';
-    messageCount++;
-
-    const typingId = addTypingIndicator();
-
-    try {
-        // Llamar a la API de Gemini con el prompt socrático
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{
-                            text: `Eres un tutor socrático de matemáticas para IB (Apps NM) y secundaria.
-
-**TU IDENTIDAD:**
-- Eres experto en álgebra, geometría, funciones, trigonometría, estadística y probabilidad.
-- Eres también experto en GeoGebra.
-- Tu objetivo es guiar al estudiante para que descubra las respuestas por sí mismo, NO darlas.
-
-**TUS REGLAS ABSOLUTAS:**
-1. NUNCA des la respuesta final al problema.
-2. NUNCA hagas la resolución completa paso a paso.
-3. NUNCA hagas los cálculos por el estudiante.
-4. SOLO puedes hacer UNA pregunta por turno.
-5. Tu respuesta debe contener: 
-   - VALIDACIÓN EMOCIONAL (normaliza el error, valida su esfuerzo)
-   - MICRO-PISTA CONCEPTUAL (1-2 líneas)
-   - UNA SOLA PREGUNTA GUIADA (clara y concreta)
-
-**EJEMPLO DE RESPUESTA IDEAL:**
-Estudiante: "No entiendo cómo calcular la media de estos datos"
-Tutor: "¡Excelente pregunta! La media es una de las medidas más importantes en estadística. Imagina que tienes 5 amigos y quieres saber cuánto dinero tienen en promedio. ¿Qué harías para calcularlo? ¿Qué pasos seguirías?"
-
-**AHORA RESPONDE:**
-El estudiante te pregunta: "${question}"
-
-Responde siguiendo tus reglas.`
-                        }]
-                    }],
-                    generationConfig: {
-                        temperature: 0.7,
-                        maxOutputTokens: 300,
-                    }
-                })
-            }
-        );
-
-        const data = await response.json();
-        
-        let answer = "Lo siento, no pude procesar tu pregunta. ¿Puedes reformularla?";
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-            answer = data.candidates[0].content.parts[0].text;
-        }
-
-        removeTypingIndicator(typingId);
-        addMessage('bot', answer);
-
-    } catch (error) {
-        removeTypingIndicator(typingId);
-        addMessage('bot', '❌ Hubo un error conectando con el tutor. Por favor, intenta de nuevo.');
-        console.error('Error:', error);
-    }
-}
-    
-    function detectTopic(question) {
-        const q = question.toLowerCase();
-        if (q.includes('estad') || q.includes('media') || q.includes('desviación') || q.includes('dato')) return 'estadistica';
-        if (q.includes('prob') || q.includes('azar') || q.includes('moneda') || q.includes('dado') || q.includes('posibilidad')) return 'probabilidad';
-        if (q.includes('geomet') || q.includes('triáng') || q.includes('cuadrado') || q.includes('círculo') || q.includes('ángulo') || q.includes('perímetro') || q.includes('área')) return 'geometria';
-        if (q.includes('funci') || q.includes('gráfica') || q.includes('pendiente') || q.includes('dominio') || q.includes('rango')) return 'funciones';
-        if (q.includes('trig') || q.includes('sen') || q.includes('cos') || q.includes('tan') || q.includes('sec') || q.includes('csc') || q.includes('cot')) return 'trigonometria';
-        if (q.includes('álgebra') || q.includes('ecuación') || q.includes('variable') || q.includes('despejar') || q.includes('incógnita') || q.includes('x')) return 'algebra';
-        return null;
-    }
-
-    function getSocraticResponse(question, topic) {
-        if (topic && socraticResponses[topic]) {
-            const r = socraticResponses[topic];
-            return `${r.validation}\n\n💡 ${r.hint}\n\n❓ ${r.question}`;
-        }
-        
-        if (messageCount > 3) {
-            const advancedResponses = [
-                "✅ ¡Vas muy bien! Sigamos profundizando.\n\n💡 Piensa en cómo este concepto se relaciona con otros que ya has aprendido.\n\n❓ ¿Puedes encontrar una conexión entre lo que estás estudiando y algo que ya sabías?",
-                "🌟 Excelente progreso. La práctica hace al maestro.\n\n💡 A veces, cambiar la perspectiva ayuda a ver soluciones que antes no veíamos.\n\n❓ Si tuvieras que explicar esto a un amigo, ¿cómo lo harías?",
-                "🧠 Estás desarrollando un pensamiento matemático muy sólido.\n\n💡 Las matemáticas no son solo números, son formas de pensar y resolver problemas.\n\n❓ ¿Qué patrones o regularidades estás observando en este problema?"
-            ];
-            return advancedResponses[Math.floor(Math.random() * advancedResponses.length)];
-        }
-        
-        const defaultRes = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-        return `${defaultRes.validation}\n\n💡 ${defaultRes.hint}\n\n❓ ${defaultRes.question}`;
-    }
-
-    function addMessage(sender, text) {
-        const container = document.getElementById('chatMessages');
-        const div = document.createElement('div');
-        
-        if (sender === 'user') {
-            div.innerHTML = `
-                <div style="display: flex; gap: 10px; margin-bottom: 10px; justify-content: flex-end;">
-                    <div style="background: var(--accent); color: var(--bg); padding: 10px 14px; border-radius: 12px; max-width: 85%; white-space: pre-wrap;">
-                        ${text}
-                    </div>
-                    <div style="background: var(--card); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🧑‍🎓</div>
-                </div>
-            `;
-        } else {
-            const formattedText = text
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\n/g, '<br>');
-            
-            div.innerHTML = `
-                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                    <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
-                    <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; max-width: 85%; white-space: pre-wrap;">
-                        ${formattedText}
-                    </div>
-                </div>
-            `;
-        }
-        
-        container.appendChild(div);
-        scrollChatToBottom();
-    }
-
-    function addTypingIndicator() {
-        const container = document.getElementById('chatMessages');
-        const div = document.createElement('div');
-        div.id = 'typingIndicator';
-        div.innerHTML = `
-            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
-                <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; display: flex; gap: 4px; align-items: center;">
-                    <span style="animation: dots 1.4s infinite;">●</span>
-                    <span style="animation: dots 1.4s infinite 0.2s;">●</span>
-                    <span style="animation: dots 1.4s infinite 0.4s;">●</span>
-                </div>
-            </div>
-        `;
-        container.appendChild(div);
-        scrollChatToBottom();
-        return 'typingIndicator';
-    }
-
-    function removeTypingIndicator(id) {
-        const el = document.getElementById(id);
-        if (el) el.remove();
-    }
-
-    function scrollChatToBottom() {
-        const container = document.getElementById('chatContainer');
-        container.scrollTop = container.scrollHeight;
-    }
-
-    function clearChat() {
-        if (confirm('¿Seguro que quieres limpiar el chat?')) {
-            const container = document.getElementById('chatMessages');
-            container.innerHTML = `
-                <div class="message bot" style="display: flex; gap: 10px; margin-bottom: 10px;">
-                    <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
-                    <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; max-width: 85%;">
-                        ¡Hola de nuevo! ¿Sobre qué tema te gustaría reflexionar hoy?<br>
-                        <span style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">(álgebra, geometría, funciones, trigonometría, estadística, probabilidad)</span>
-                    </div>
-                </div>
-            `;
-            messageCount = 0;
-        }
-    }
-
-    function addExample() {
-        const examples = [
-            "No entiendo cómo calcular la media de un conjunto de datos",
-            "¿Cómo se calcula la probabilidad de que salga un 6 al lanzar un dado?",
-            "¿Qué es el teorema de Pitágoras y para qué sirve?",
-            "¿Cómo se resuelve una ecuación lineal?",
-            "No entiendo cómo graficar una función cuadrática",
-            "¿Cómo se usa la trigonometría en la vida real?"
-        ];
-        const example = examples[Math.floor(Math.random() * examples.length)];
-        document.getElementById('userQuestion').value = example;
-        sendSocraticQuestion();
-    }
-
-    // Permitir enviar con Enter
-    document.addEventListener('DOMContentLoaded', function() {
-        const input = document.getElementById('userQuestion');
-        if (input) {
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendSocraticQuestion();
-                }
-            });
-        }
+    document.getElementById('userQuestion').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') sendQuestion();
     });
+});
 </script>
-
 </body>
 </html>
