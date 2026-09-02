@@ -53,6 +53,15 @@ border-radius: 8px;
 }
 
 /* --- Navegación --- */
+<nav>
+    <button onclick="show('inicio')">Inicio</button>
+    <button onclick="show('plan')">Plan Clase</button>
+    <button onclick="show('referentes')">Referentes</button>
+    <button onclick="show('eval')">Evaluación</button>
+    <button onclick="show('actividad')">Actividad</button>
+    <button onclick="show('caso')">Caso Práctico</button>
+    <button onclick="show('socratic')" style="background: var(--accent); color: var(--bg);">🤖 Tutor IA</button>
+</nav>
 nav {
 background: var(--surface);
 padding: 0.75rem 1.5rem;
@@ -69,7 +78,15 @@ align-items: center;
 scrollbar-width: thin;
 scrollbar-color: var(--accent) var(--bg);
 }
-
+<nav id="mainNav">
+    <button class="active-tab" data-section="inicio">Inicio</button>
+    <button data-section="plan">Plan Clase</button>
+    <button data-section="referentes">Referentes</button>
+    <button data-section="eval">Evaluación</button>
+    <button data-section="actividad">Actividad</button>
+    <button data-section="caso">Caso Práctico</button>
+    <button onclick="show('socratic')" style="background: var(--accent); color: var(--bg);">🤖 Tutor IA</button>  <!-- NUEVO -->
+</nav>
 nav button {
 background: transparent;
 border: none;
