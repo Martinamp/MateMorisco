@@ -966,3 +966,240 @@ document.querySelector('#mainNav button.active-tab')?.click();
 
 </body>
 </html>
+<script>
+    function show(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+    function toggle(id) {
+        let el = document.getElementById(id);
+        el.style.display = (el.style.display === 'none') ? 'table-row' : 'none';
+    }
+    function calc() {
+        let p = document.getElementById('prob').value;
+        document.getElementById('res').innerText = "La probabilidad del evento complementario es: " + (1 - p);
+    }
+    // ============================================================
+// AGENTE SOCRÁTICO - Tutor de Matemáticas
+// Basado en el prompt de identidad y rol
+// ============================================================
+
+// ---- Respuestas socráticas predefinidas (para versión sin API) ----
+const socraticResponses = {
+    'estadistica': {
+        validation: "¡Excelente pregunta! La estadística puede parecer compleja al principio, pero es una herramienta muy poderosa.",
+        hint: "Piensa en la estadística como una forma de resumir mucha información en números que nos cuentan una historia.",
+        question: "¿Qué crees que representa la media aritmética de un conjunto de datos en la vida real?"
+    },
+    'probabilidad': {
+        validation: "¡La probabilidad es fascinante! Es la forma que tenemos de medir la incertidumbre.",
+        hint: "Imagina que lanzas una moneda al aire. ¿Qué posibilidades hay de que caiga cara?",
+        question: "¿Por qué crees que la probabilidad siempre está entre 0 y 1?"
+    },
+    'geometria': {
+        validation: "La geometría está en todas partes, desde un edificio hasta un videojuego.",
+        hint: "Cuando veas una figura geométrica, pregúntate: ¿qué forma tiene? ¿Qué propiedades tiene?",
+        question: "Si tienes un triángulo, ¿qué relación hay entre sus ángulos internos?"
+    },
+    'funciones': {
+        validation: "Las funciones son como máquinas: reciben algo y devuelven algo transformado.",
+        hint: "Piensa en una función como una receta de cocina: ingredientes (entrada) → proceso → plato (salida).",
+        question: "¿Qué significa que una función sea 'lineal'? ¿Cómo se ve en una gráfica?"
+    },
+    'trigonometria': {
+        validation: "La trigonometría puede parecer difícil, pero es solo la relación entre los lados y ángulos de un triángulo.",
+        hint: "El seno, coseno y tangente son como 'recetas' para encontrar medidas que no vemos directamente.",
+        question: "¿Qué relación crees que hay entre el seno y el coseno de un mismo ángulo?"
+    },
+    'algebra': {
+        validation: "El álgebra es como un juego de misterio donde tienes que encontrar el valor de la incógnita.",
+        hint: "Piensa en la ecuación como una balanza: lo que hagas de un lado, debes hacerlo del otro para mantener el equilibrio.",
+        question: "¿Qué significa 'despejar' una variable en una ecuación?"
+    }
+};
+
+const defaultResponses = [
+    {
+        validation: "¡Me encanta tu curiosidad! Esa es la primera habilidad de un buen matemático.",
+        hint: "A veces, el primer paso es entender qué nos están pidiendo realmente.",
+        question: "¿Podrías explicarme con tus propias palabras qué crees que te pide el problema?"
+    },
+    {
+        validation: "Es normal sentirse perdido al principio. Hasta los matemáticos más grandes empezaron desde cero.",
+        hint: "Divide el problema en partes más pequeñas. Resuelve lo que puedas y ve paso a paso.",
+        question: "¿Cuál crees que sería el primer paso para resolver este problema?"
+    },
+    {
+        validation: "¡Bien! Ya estás pensando como un matemático. El error es parte del proceso.",
+        hint: "Pregúntate: ¿qué información tengo y qué necesito encontrar?",
+        question: "¿Qué herramientas o fórmulas crees que podrían ayudarte aquí?"
+    }
+];
+
+let messageCount = 0;
+
+function sendSocraticQuestion() {
+    const input = document.getElementById('userQuestion');
+    const question = input.value.trim();
+    if (!question) return;
+
+    addMessage('user', question);
+    input.value = '';
+    messageCount++;
+
+    const topic = detectTopic(question);
+    let response = getSocraticResponse(question, topic);
+    
+    const typingId = addTypingIndicator();
+    setTimeout(() => {
+        removeTypingIndicator(typingId);
+        addMessage('bot', response);
+    }, 1200 + Math.random() * 800);
+}
+
+function detectTopic(question) {
+    const q = question.toLowerCase();
+    if (q.includes('estad') || q.includes('media') || q.includes('desviación') || q.includes('dato')) return 'estadistica';
+    if (q.includes('prob') || q.includes('azar') || q.includes('moneda') || q.includes('dado') || q.includes('posibilidad')) return 'probabilidad';
+    if (q.includes('geomet') || q.includes('triáng') || q.includes('cuadrado') || q.includes('círculo') || q.includes('ángulo') || q.includes('perímetro') || q.includes('área')) return 'geometria';
+    if (q.includes('funci') || q.includes('gráfica') || q.includes('pendiente') || q.includes('dominio') || q.includes('rango')) return 'funciones';
+    if (q.includes('trig') || q.includes('sen') || q.includes('cos') || q.includes('tan') || q.includes('sec') || q.includes('csc') || q.includes('cot')) return 'trigonometria';
+    if (q.includes('álgebra') || q.includes('ecuación') || q.includes('variable') || q.includes('despejar') || q.includes('incógnita') || q.includes('x')) return 'algebra';
+    return null;
+}
+
+function getSocraticResponse(question, topic) {
+    if (topic && socraticResponses[topic]) {
+        const r = socraticResponses[topic];
+        return `${r.validation}\n\n💡 ${r.hint}\n\n❓ ${r.question}`;
+    }
+    
+    if (messageCount > 3) {
+        const advancedResponses = [
+            "✅ ¡Vas muy bien! Sigamos profundizando.\n\n💡 Piensa en cómo este concepto se relaciona con otros que ya has aprendido.\n\n❓ ¿Puedes encontrar una conexión entre lo que estás estudiando y algo que ya sabías?",
+            "🌟 Excelente progreso. La práctica hace al maestro.\n\n💡 A veces, cambiar la perspectiva ayuda a ver soluciones que antes no veíamos.\n\n❓ Si tuvieras que explicar esto a un amigo, ¿cómo lo harías?",
+            "🧠 Estás desarrollando un pensamiento matemático muy sólido.\n\n💡 Las matemáticas no son solo números, son formas de pensar y resolver problemas.\n\n❓ ¿Qué patrones o regularidades estás observando en este problema?"
+        ];
+        return advancedResponses[Math.floor(Math.random() * advancedResponses.length)];
+    }
+    
+    const defaultRes = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+    return `${defaultRes.validation}\n\n💡 ${defaultRes.hint}\n\n❓ ${defaultRes.question}`;
+}
+
+function addMessage(sender, text) {
+    const container = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = `message ${sender}`;
+    
+    if (sender === 'user') {
+        div.innerHTML = `
+            <div style="display: flex; gap: 10px; margin-bottom: 10px; justify-content: flex-end;">
+                <div style="background: var(--accent); color: var(--bg); padding: 10px 14px; border-radius: 12px; max-width: 85%; white-space: pre-wrap;">
+                    ${text}
+                </div>
+                <div style="background: var(--card); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🧑‍🎓</div>
+            </div>
+        `;
+    } else {
+        const formattedText = text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n/g, '<br>');
+        
+        div.innerHTML = `
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
+                <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; max-width: 85%; white-space: pre-wrap;">
+                    ${formattedText}
+                </div>
+            </div>
+        `;
+    }
+    
+    container.appendChild(div);
+    scrollChatToBottom();
+}
+
+function addTypingIndicator() {
+    const container = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.id = 'typingIndicator';
+    div.innerHTML = `
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
+            <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; display: flex; gap: 4px; align-items: center;">
+                <span style="animation: dots 1.4s infinite;">●</span>
+                <span style="animation: dots 1.4s infinite 0.2s;">●</span>
+                <span style="animation: dots 1.4s infinite 0.4s;">●</span>
+            </div>
+        </div>
+    `;
+    container.appendChild(div);
+    scrollChatToBottom();
+    return 'typingIndicator';
+}
+
+function removeTypingIndicator(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+}
+
+function scrollChatToBottom() {
+    const container = document.getElementById('chatContainer');
+    container.scrollTop = container.scrollHeight;
+}
+
+function clearChat() {
+    if (confirm('¿Seguro que quieres limpiar el chat?')) {
+        const container = document.getElementById('chatMessages');
+        container.innerHTML = `
+            <div class="message bot" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <div style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤖</div>
+                <div style="background: var(--card); padding: 10px 14px; border-radius: 12px; max-width: 85%;">
+                    ¡Hola de nuevo! ¿Sobre qué tema te gustaría reflexionar hoy?<br>
+                    <span style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">(álgebra, geometría, funciones, trigonometría, estadística, probabilidad)</span>
+                </div>
+            </div>
+        `;
+        messageCount = 0;
+    }
+}
+
+function addExample() {
+    const examples = [
+        "No entiendo cómo calcular la media de un conjunto de datos",
+        "¿Cómo se calcula la probabilidad de que salga un 6 al lanzar un dado?",
+        "¿Qué es el teorema de Pitágoras y para qué sirve?",
+        "¿Cómo se resuelve una ecuación lineal?",
+        "No entiendo cómo graficar una función cuadrática",
+        "¿Cómo se usa la trigonometría en la vida real?"
+    ];
+    const example = examples[Math.floor(Math.random() * examples.length)];
+    document.getElementById('userQuestion').value = example;
+    sendSocraticQuestion();
+}
+
+// Agregar estilos CSS para animación de dots
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes dots {
+        0%, 20% { opacity: 0.2; }
+        50% { opacity: 1; }
+        100% { opacity: 0.2; }
+    }
+`;
+document.head.appendChild(style);
+
+// Permitir enviar con Enter
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('userQuestion');
+    if (input) {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendSocraticQuestion();
+            }
+        });
+    }
+}); 🔼
+    
+</script>
