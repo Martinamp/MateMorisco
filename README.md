@@ -15,7 +15,7 @@ margin: 0;
 padding: 0;
 box-sizing: border-box;
 }
-
+    
 :root {
 --bg: #0B0D11;
 --surface: #151A21;
