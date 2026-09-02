@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutor Socrático con IA | IB</title>
+    <title>Tutor Socrático + GeoGebra | IB</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ===== ESTILOS ===== */
@@ -26,6 +26,7 @@
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
             --radius: 16px;
             --transition: all 0.3s ease;
+            --geogebra: #2a4a6e;
         }
 
         body {
@@ -41,12 +42,11 @@
         }
 
         .container {
-            max-width: 860px;
+            max-width: 880px;
             width: 100%;
             margin: 0 auto;
         }
 
-        /* ===== HEADER ===== */
         .header {
             text-align: center;
             margin-bottom: 2rem;
@@ -81,6 +81,18 @@
             -webkit-text-fill-color: var(--bg);
         }
 
+        .badge-geogebra {
+            display: inline-block;
+            background: var(--geogebra);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .status-badge {
             display: inline-block;
             font-size: 0.7rem;
@@ -99,7 +111,6 @@
             color: #fff;
         }
 
-        /* ===== TARJETA PRINCIPAL ===== */
         .tutor-card {
             background: var(--card);
             border-radius: var(--radius);
@@ -114,7 +125,6 @@
             transform: translateY(-2px);
         }
 
-        /* ===== REGLAS DEL TUTOR ===== */
         .reglas {
             background: var(--surface);
             border-radius: 12px;
@@ -141,7 +151,28 @@
             background-size: 1rem;
         }
 
-        /* ===== CHAT ===== */
+        .reglas .geogebra-highlight {
+            background: var(--geogebra);
+            color: #fff;
+            padding: 0.1rem 0.6rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .geogebra-tip {
+            background: var(--geogebra);
+            border-radius: 8px;
+            padding: 0.8rem 1.2rem;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            border-left: 4px solid #6ab0e6;
+        }
+
+        .geogebra-tip strong {
+            color: #6ab0e6;
+        }
+
         .chat-container {
             background: var(--surface);
             border-radius: 12px;
@@ -165,7 +196,6 @@
             border-radius: 8px;
         }
 
-        /* Mensajes */
         .message {
             display: flex;
             gap: 10px;
@@ -223,7 +253,7 @@
 
         .message.bot .bubble .geogebra-tag {
             display: inline-block;
-            background: #2a4a6e;
+            background: var(--geogebra);
             color: #fff;
             font-size: 0.7rem;
             padding: 2px 10px;
@@ -232,9 +262,18 @@
             font-weight: 600;
         }
 
-        .message.bot .bubble .error-message {
-            color: #f44336;
-            font-weight: 600;
+        .message.bot .bubble .step-number {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 700;
+            font-size: 0.7rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            margin-right: 6px;
         }
 
         @keyframes fadeIn {
@@ -242,7 +281,6 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Indicador de escritura */
         .typing-indicator {
             display: flex;
             gap: 10px;
@@ -293,7 +331,6 @@
             30% { transform: translateY(-6px); opacity: 1; }
         }
 
-        /* ===== INPUT Y BOTONES ===== */
         .input-area {
             display: flex;
             gap: 10px;
@@ -356,6 +393,21 @@
             cursor: not-allowed;
         }
 
+        .btn-geogebra {
+            background: var(--geogebra);
+            color: #fff;
+        }
+
+        .btn-geogebra:hover:not(:disabled) {
+            background: #1d3a55;
+            transform: scale(1.02);
+        }
+
+        .btn-geogebra:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .btn-secondary {
             background: transparent;
             color: var(--text-secondary);
@@ -367,7 +419,6 @@
             color: var(--text-primary);
         }
 
-        /* ===== ACCIONES ===== */
         .acciones {
             display: flex;
             flex-wrap: wrap;
@@ -396,7 +447,6 @@
             cursor: not-allowed;
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             text-align: center;
             margin-top: 1.5rem;
@@ -405,7 +455,16 @@
             opacity: 0.5;
         }
 
-        /* ===== RESPONSIVE ===== */
+        .geo-link {
+            color: #6ab0e6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .geo-link:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 600px) {
             body { padding: 1rem; }
             .header h1 { font-size: 1.6rem; }
@@ -422,31 +481,29 @@
 
 <div class="container">
 
-    <!-- ===== HEADER ===== -->
     <header class="header">
-        <h1>🤖 Tutor Socrático con IA</h1>
+        <h1>🤖 Tutor Socrático + GeoGebra</h1>
         <p>
             Matemáticas · IB <span class="badge">Apps NM</span>
+            <span class="badge-geogebra">📐 Experto en GeoGebra</span>
             <span id="statusBadge" class="status-badge status-offline">⚪ Desconectado</span>
         </p>
     </header>
 
-    <!-- ===== TARJETA PRINCIPAL ===== -->
     <div class="tutor-card">
 
-        <!-- Reglas del tutor -->
         <div class="reglas">
-            <strong>🧠 Metodología Socrática + IA + GeoGebra</strong>
+            <strong>🧠 Metodología Socrática + <span class="geogebra-highlight">📐 GeoGebra</span></strong>
             <ul>
                 <li><strong>NUNCA</strong> doy respuestas directas</li>
                 <li>Guío con <strong>preguntas</strong> para que descubras por ti mismo</li>
-                <li>Valido tu esfuerzo y normalizo los errores</li>
+                <li>Si es necesario, te guío <strong>paso a paso en GeoGebra</strong></li>
+                <li>Te doy comandos específicos para construir figuras y gráficas</li>
                 <li><strong>UNA pregunta por turno</strong> (regla absoluta)</li>
-                <li>Para geometría, funciones y visualización: te guío a construir en GeoGebra</li>
             </ul>
         </div>
 
-        <!-- ===== CONFIGURACIÓN API ===== -->
+        <!-- Configuración API -->
         <div style="background: var(--surface); border-radius: 12px; padding: 0.8rem 1.2rem; margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
             <span style="font-size: 0.8rem; color: var(--text-secondary);">🔑 API Key:</span>
             <input type="password" id="apiKeyInput" placeholder="Pega tu clave de Gemini aquí..." 
@@ -455,19 +512,19 @@
             <span id="connectionStatus" style="font-size: 0.75rem; color: var(--text-secondary);">⚪ Esperando conexión</span>
         </div>
 
-        <!-- ===== CHAT ===== -->
+        <!-- CHAT -->
         <div class="chat-container" id="chatContainer">
             <div id="chatMessages">
-                <!-- Mensaje de bienvenida -->
                 <div class="message bot">
                     <div class="avatar">🤖</div>
                     <div class="bubble">
-                        <strong>¡Hola!</strong> Soy tu tutor socrático con IA.<br><br>
-                        <strong>Reglas absolutas:</strong>
+                        <strong>¡Hola!</strong> Soy tu tutor socrático experto en GeoGebra.<br><br>
+                        <span class="geogebra-tag">📐 GeoGebra</span> Puedo guiarte paso a paso para construir figuras, graficar funciones y crear construcciones interactivas.<br><br>
+                        <strong>Reglas:</strong>
                         <ul style="margin: 6px 0 6px 18px; color: var(--text-secondary); font-size: 0.9rem;">
                             <li>❌ No doy respuestas directas</li>
                             <li>✅ Guío con preguntas</li>
-                            <li>📐 Experto en GeoGebra</li>
+                            <li>📐 Te enseño a usar GeoGebra</li>
                             <li>🎯 Una pregunta por turno</li>
                         </ul>
                         <strong>¿Sobre qué tema te gustaría reflexionar hoy?</strong><br>
@@ -477,37 +534,39 @@
             </div>
         </div>
 
-        <!-- ===== INPUT ===== -->
+        <!-- INPUT -->
         <div class="input-area">
             <input type="text" id="userQuestion" placeholder="Escribe tu pregunta o problema..." autofocus disabled>
             <button class="btn btn-primary" id="sendBtn" onclick="sendQuestion()" disabled>Enviar ➤</button>
         </div>
 
-        <!-- ===== ACCIONES ===== -->
+        <!-- ACCIONES -->
         <div class="acciones">
-            <button onclick="addExample()" id="exampleBtn" disabled>📝 Probar ejemplo</button>
-            <button onclick="addGeoGebraExample()" id="geogebraBtn" disabled>📐 Ejemplo GeoGebra</button>
-            <button onclick="clearChat()">🗑️ Limpiar chat</button>
+            <button onclick="addExample()" id="exampleBtn" disabled>📝 Ejemplo</button>
+            <button onclick="addGeoGebraExample()" id="geogebraBtn" disabled>📐 GeoGebra</button>
+            <button onclick="clearChat()">🗑️ Limpiar</button>
+            <button onclick="openGeoGebra()" style="color: #6ab0e6; font-weight: 600;">🌐 Abrir GeoGebra</button>
         </div>
 
     </div>
 
-    <!-- ===== FOOTER ===== -->
     <div class="footer">
-        Tutor Socrático · IA con Gemini · Basado en el método de Sócrates · Experto en GeoGebra
+        Tutor Socrático · IA con Gemini · Experto en GeoGebra · Basado en el método de Sócrates
     </div>
 </div>
 
-<!-- ===== JAVASCRIPT ===== -->
 <script>
     // ============================================================
-    // TUTOR SOCRÁTICO CON GEMINI API
+    // TUTOR SOCRÁTICO EXPERTO EN GEOGEBRA CON GEMINI API
     // ============================================================
 
     // ---- ESTADO ----
     let isConnected = false;
-    let apiKey = '';
+    let apiKey = 'AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA';
     let isProcessing = false;
+    let chatHistory = [];
+    let geogebraStep = 0;
+    let currentTopic = null;
 
     // ---- ELEMENTOS DOM ----
     const apiKeyInput = document.getElementById('apiKeyInput');
@@ -519,7 +578,13 @@
     const exampleBtn = document.getElementById('exampleBtn');
     const geogebraBtn = document.getElementById('geogebraBtn');
 
-    // ---- CONEXIÓN A LA API ----
+    // ---- ABRIR GEOGEBRA ----
+    function openGeoGebra() {
+        window.open('https://www.geogebra.org/classic', '_blank');
+        addMessage('bot', '📐 **GeoGebra abierto en una nueva pestaña.**\n\nRecuerda que puedes usar:\n- La **barra de entrada** para escribir comandos\n- Las **herramientas** de la barra lateral\n- Los **deslizadores** para explorar cambios\n\n¿Qué te gustaría construir?');
+    }
+
+    // ---- CONEXIÓN ----
     function connectAPI() {
         const key = apiKeyInput.value.trim();
 
@@ -529,17 +594,15 @@
             return;
         }
 
-        // Validar formato básico de la clave
         if (!key.startsWith('AIza')) {
             connectionStatus.textContent = '⚠️ Clave inválida. Debe empezar con "AIza"';
             connectionStatus.style.color = '#f44336';
             return;
         }
 
-        AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA = key;
+        apiKey = key;
         isConnected = true;
 
-        // Actualizar UI
         statusBadge.textContent = '🟢 Conectado';
         statusBadge.className = 'status-badge status-online';
         connectionStatus.textContent = '✅ Conectado a Gemini';
@@ -548,18 +611,51 @@
         connectBtn.style.background = '#4CAF50';
         connectBtn.style.color = '#fff';
 
-        // Habilitar input y botones
         userInput.disabled = false;
         sendBtn.disabled = false;
         exampleBtn.disabled = false;
         geogebraBtn.disabled = false;
         userInput.focus();
 
-        // Mensaje de confirmación en el chat
-        addMessage('bot', '🔌 **Conexión establecida con Gemini AI.**\n\nAhora puedo ayudarte con preguntas inteligentes. Recuerda: **no doy respuestas directas**, solo preguntas guía.\n\n¿Qué tema te gustaría explorar?');
+        addMessage('bot', '🔌 **Conexión establecida.**\n\n📐 Recuerda: soy experto en GeoGebra. Si necesitas construir figuras o graficar funciones, te guiaré paso a paso.\n\n¿Qué tema te gustaría explorar?');
     }
 
-    // ---- FUNCIÓN PRINCIPAL PARA ENVIAR PREGUNTA ----
+    // ---- DETECTAR GEOGEBRA ----
+    function detectGeoGebra(question) {
+        const q = question.toLowerCase();
+        const keywords = [
+            'geogebra', 'graficar', 'dibujar', 'construir',
+            'figura', 'triángulo', 'cuadrado', 'circunferencia', 'círculo',
+            'función', 'gráfica', 'ángulo', 'polígono', 'rectángulo',
+            'parábola', 'lineal', 'cuadrática', 'exponencial'
+        ];
+        return keywords.some(k => q.includes(k));
+    }
+
+    // ---- DETECTAR CONFUSIÓN ----
+    function detectConfusion(question) {
+        const q = question.toLowerCase();
+        const phrases = [
+            'no entiendo', 'no comprendo', 'no sé', 'no lo sé',
+            'me confundo', 'estoy perdido', 'no tengo idea',
+            'explicame', 'explícame', 'ayuda', 'ayúdame'
+        ];
+        return phrases.some(p => q.includes(p));
+    }
+
+    // ---- DETECTAR TEMA ----
+    function detectTopic(question) {
+        const q = question.toLowerCase();
+        if (q.includes('triángulo') || q.includes('cuadrado') || q.includes('rectángulo') || q.includes('círculo') || q.includes('polígono')) return 'geometria';
+        if (q.includes('función') || q.includes('gráfica') || q.includes('parábola')) return 'funciones';
+        if (q.includes('seno') || q.includes('coseno') || q.includes('tangente') || q.includes('ángulo')) return 'trigonometria';
+        if (q.includes('media') || q.includes('promedio') || q.includes('desviación')) return 'estadistica';
+        if (q.includes('probabilidad') || q.includes('azar') || q.includes('dado')) return 'probabilidad';
+        if (q.includes('ecuación') || q.includes('despejar') || q.includes('incógnita')) return 'algebra';
+        return null;
+    }
+
+    // ---- FUNCIÓN PRINCIPAL ----
     async function sendQuestion() {
         const question = userInput.value.trim();
 
@@ -575,20 +671,30 @@
 
         if (isProcessing) return;
 
-        // Mostrar pregunta del usuario
+        const isGeoGebra = detectGeoGebra(question);
+        const isConfused = detectConfusion(question);
+        const topic = detectTopic(question);
+
+        if (isGeoGebra) {
+            geogebraStep = 0;
+        }
+
         addMessage('user', question);
         userInput.value = '';
         isProcessing = true;
         userInput.disabled = true;
         sendBtn.disabled = true;
 
-        // Mostrar indicador de escritura
         const typingId = addTypingIndicator();
 
         try {
-            const response = await callGeminiAPI(question);
+            const response = await callGeminiAPI(question, isConfused, isGeoGebra, topic);
             removeTypingIndicator(typingId);
             addMessage('bot', response);
+
+            if (isGeoGebra) {
+                geogebraStep++;
+            }
         } catch (error) {
             removeTypingIndicator(typingId);
             console.error('Error:', error);
@@ -602,28 +708,72 @@
     }
 
     // ---- LLAMADA A LA API DE GEMINI ----
-    async function callGeminiAPI(question) {
-        const prompt = `Eres un tutor Socrático de matemáticas para educación secundaria (álgebra, geometría, funciones, trigonometría, estadística, probabilidad). Eres también un experto maestro en el software GeoGebra.
+    async function callGeminiAPI(question, isConfused, isGeoGebra, topic) {
+        let prompt = `Eres un tutor Socrático de matemáticas para educación secundaria. Eres también un EXPERTO en el software GeoGebra.
+
+        TU IDENTIDAD:
+        - Enseñas álgebra, geometría, funciones, trigonometría, estadística y probabilidad.
+        - Eres un maestro en GeoGebra: conoces todas las herramientas, comandos y posibilidades.
+        - Tu objetivo es guiar al estudiante para que desarrolle razonamiento lógico y autonomía.
 
         REGLAS ABSOLUTAS:
         1. NUNCA des la respuesta final a un problema.
         2. NUNCA escribas la resolución completa paso a paso.
         3. NUNCA hagas el cálculo algebraico o aritmético por el alumno.
         4. SOLO puedes hacer UNA pregunta por turno.
-        5. Toda intervención debe contener: validación emocional + micro-pista conceptual + UNA única pregunta guiada.
+        5. Toda intervención debe contener: validación emocional + micro-pista + UNA pregunta guiada.
 
-        METODOLOGÍA:
-        1. Validación Emocional: Si el alumno se equivoca o duda, valida su esfuerzo y normaliza el error.
-        2. Micro-pista conceptual: Da una idea breve, analogía o conexión con conocimientos previos.
-        3. UNA sola pregunta guiada: Clara, concreta, accionable.
+        PROTOCOLO GEOGEBRA (¡IMPORTANTE!):
+        Si el problema involucra geometría, funciones, trigonometría o visualización:
+        1. Guía al alumno para que ABRA GeoGebra (geogebra.org/classic)
+        2. Da instrucciones ESPECÍFICAS de qué herramientas usar:
+           - "Usa la herramienta 'Polígono' en la barra lateral"
+           - "Escribe en la barra de entrada: f(x) = x^2"
+           - "Usa la herramienta 'Deslizador' para crear un parámetro"
+           - "Selecciona la herramienta 'Punto Medio' y haz clic en los puntos A y B"
+        3. Da comandos EXACTOS para la barra de entrada:
+           - "Escribe: Polígono(A, B, C)"
+           - "Escribe: f(x) = 2*x + 3"
+           - "Escribe: Circunferencia(O, radio)"
+        4. Pregunta: "Si arrastras el punto A, ¿qué observas? ¿Qué propiedades se mantienen?"
+        5. Guía para explorar: "Usa el deslizador para cambiar el valor de k. ¿Cómo afecta a la gráfica?"
 
-        PROTOCOLO GEOGEBRA:
-        Si el problema involucra geometría, trigonometría, funciones o visualización:
-        - Guía al alumno para que construya la figura en GeoGebra.
-        - Indica qué herramientas o comandos usar.
-        - Pregunta: "Si arrastras el punto, ¿qué observas?"
+        Si el estudiante dice "no entiendo", da un paso atrás, simplifica y valida su esfuerzo.`;
 
-        TONO: Equilibrado entre formal y cercano. Claro, paciente y motivador.
+        if (isGeoGebra) {
+            prompt += `
+
+        📐 **EL ESTUDIANTE QUIERE USAR GEOGEBRA.**
+        - Da instrucciones PASO A PASO.
+        - Sé específico con las herramientas y comandos.
+        - Pregunta qué observa al manipular la construcción.`;
+        }
+
+        if (isConfused) {
+            prompt += `
+
+        ⚠️ **EL ESTUDIANTE ESTÁ CONFUNDIDO.**
+        - Valida su esfuerzo: "Es normal sentirse así, las matemáticas son desafiantes."
+        - Simplifica el problema.
+        - Usa una analogía de la vida cotidiana.`;
+        }
+
+        if (topic) {
+            prompt += `
+
+        TEMA DETECTADO: ${topic}
+        - Adapta tus preguntas a este tema específico.
+        - Si es geometría o funciones, usa GeoGebra.`;
+        }
+
+        if (chatHistory.length > 0) {
+            prompt += `
+
+        HISTORIAL DE CONVERSACIÓN:
+        ${chatHistory.slice(-6).join('\n')}`;
+        }
+
+        prompt += `
 
         La pregunta del estudiante es: "${question}"
 
@@ -634,18 +784,12 @@
                 `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
                 {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: prompt
-                            }]
-                        }],
+                        contents: [{ parts: [{ text: prompt }] }],
                         generationConfig: {
-                            temperature: 0.7,
-                            maxOutputTokens: 500,
+                            temperature: 0.8,
+                            maxOutputTokens: 600,
                             topK: 1,
                             topP: 1
                         }
@@ -667,19 +811,24 @@
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {
                 let text = data.candidates[0].content.parts[0].text;
 
-                // Limpiar y formatear la respuesta
                 text = text
-                    .replace(/\*\*(.*?)\*\*/g, '**$1**')
-                    .replace(/^Validación Emocional:/gm, '')
-                    .replace(/^Micro-pista:/gm, '')
-                    .replace(/^Pregunta:/gm, '');
+                    .replace(/^Validación Emocional:\s*/gm, '')
+                    .replace(/^Micro-pista:\s*/gm, '')
+                    .replace(/^Pregunta:\s*/gm, '')
+                    .trim();
 
-                // Asegurar que tenga el formato correcto
                 if (!text.includes('❓') && !text.includes('?') && !text.includes('¿')) {
                     text += '\n\n❓ ¿Qué crees que deberías hacer primero?';
                 }
 
-                return text.trim();
+                chatHistory.push(`Estudiante: ${question}`);
+                chatHistory.push(`Tutor: ${text.substring(0, 80)}...`);
+
+                if (chatHistory.length > 10) {
+                    chatHistory.splice(0, 2);
+                }
+
+                return text;
             } else {
                 throw new Error('No se pudo obtener una respuesta de la IA.');
             }
@@ -699,7 +848,8 @@
 
         const formattedText = text
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\n/g, '<br>');
+            .replace(/\n/g, '<br>')
+            .replace(/📐/g, '<span class="geogebra-tag">📐 GeoGebra</span>');
 
         if (sender === 'user') {
             div.innerHTML = `
@@ -745,7 +895,6 @@
         container.scrollTop = container.scrollHeight;
     }
 
-    // ---- LIMPIAR CHAT ----
     function clearChat() {
         if (!confirm('¿Seguro que quieres limpiar el chat?')) return;
 
@@ -755,38 +904,33 @@
                 <div class="avatar">🤖</div>
                 <div class="bubble">
                     <strong>¡Hola de nuevo!</strong><br><br>
-                    <strong>Reglas absolutas:</strong>
-                    <ul style="margin: 6px 0 6px 18px; color: var(--text-secondary); font-size: 0.9rem;">
-                        <li>❌ No doy respuestas directas</li>
-                        <li>✅ Guío con preguntas</li>
-                        <li>📐 Experto en GeoGebra</li>
-                        <li>🎯 Una pregunta por turno</li>
-                    </ul>
+                    <span class="geogebra-tag">📐 GeoGebra</span> Recuerda que soy experto en GeoGebra. Si necesitas construir figuras o graficar funciones, te guiaré paso a paso.<br><br>
                     <strong>¿Sobre qué tema te gustaría reflexionar hoy?</strong><br>
                     <span style="font-size:0.8rem;color:var(--text-secondary);">(álgebra, geometría, funciones, trigonometría, estadística, probabilidad)</span>
                 </div>
             </div>
         `;
 
+        chatHistory = [];
+        geogebraStep = 0;
+
         if (isConnected) {
             userInput.focus();
         }
     }
 
-    // ---- EJEMPLOS ----
     function addExample() {
         if (!isConnected) {
-            addMessage('bot', '⚠️ **Primero conecta la API** para usar ejemplos.');
+            addMessage('bot', '⚠️ **Primero conecta la API.**');
             return;
         }
 
         const examples = [
-            "¿Cómo puedo resolver una ecuación lineal con fracciones?",
-            "¿Cómo calculo el área de un triángulo si solo conozco sus lados?",
+            "¿Cómo puedo resolver una ecuación lineal?",
+            "¿Cómo calculo el área de un triángulo?",
             "No entiendo cómo graficar una función cuadrática",
             "¿Cómo se usa el teorema de Pitágoras?",
-            "¿Cómo calculo la media de un conjunto de datos con valores grandes?",
-            "¿Cuál es la probabilidad de que salga un número par al lanzar un dado?"
+            "¿Cómo calculo la media de un conjunto de datos?"
         ];
         const example = examples[Math.floor(Math.random() * examples.length)];
         userInput.value = example;
@@ -795,14 +939,15 @@
 
     function addGeoGebraExample() {
         if (!isConnected) {
-            addMessage('bot', '⚠️ **Primero conecta la API** para usar ejemplos con GeoGebra.');
+            addMessage('bot', '⚠️ **Primero conecta la API.**');
             return;
         }
 
         const examples = [
             "¿Cómo puedo construir un triángulo equilátero en GeoGebra?",
             "¿Cómo grafico la función f(x)=x² en GeoGebra?",
-            "¿Cómo encuentro el área de un círculo usando GeoGebra?"
+            "¿Cómo encuentro el área de un círculo usando GeoGebra?",
+            "¿Cómo construyo un rectángulo con medidas específicas en GeoGebra?"
         ];
         const example = examples[Math.floor(Math.random() * examples.length)];
         userInput.value = example;
