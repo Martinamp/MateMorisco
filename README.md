@@ -545,7 +545,7 @@
 // ---- LLAMADA A LA API DE GEMINI ----
 async function callGeminiAPI(question, isConfused, isGeoGebra, topic) {
     // Verificar que la clave esté configurada
-    if (!API_KEY || API_KEY === 'TU_CLAVE_AQUI') {
+    if (!API_KEY || API_KEY === 'AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA') {
         throw new Error('🔑 No se ha configurado la clave de API. Edita el código y pon tu clave en la variable API_KEY.');
     }
 
