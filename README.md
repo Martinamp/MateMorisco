@@ -760,7 +760,7 @@
             addMessage('bot', response);
         }, 1200 + Math.random() * 800);
     }
-
+    
     function detectTopic(question) {
         const q = question.toLowerCase();
         if (q.includes('estad') || q.includes('media') || q.includes('desviación') || q.includes('dato')) return 'estadistica';
