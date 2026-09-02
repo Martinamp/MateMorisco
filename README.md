@@ -741,25 +741,87 @@
     ];
 
     let messageCount = 0;
+// ============================================================
+// TUTOR SOCRÁTICO CON GEMINI API
+// ============================================================
 
-    function sendSocraticQuestion() {
-        const input = document.getElementById('userQuestion');
-        const question = input.value.trim();
-        if (!question) return;
+// 🔑 AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA
+const GEMINI_API_KEY = 'TU_CLAVE_AQUI'; // <-- REEMPLAZA CON TU CLAVE
 
-        addMessage('user', question);
-        input.value = '';
-        messageCount++;
+async function sendSocraticQuestion() {
+    const input = document.getElementById('userQuestion');
+    const question = input.value.trim();
+    if (!question) return;
 
-        const topic = detectTopic(question);
-        let response = getSocraticResponse(question, topic);
+    addMessage('user', question);
+    input.value = '';
+    messageCount++;
+
+    const typingId = addTypingIndicator();
+
+    try {
+        // Llamar a la API de Gemini con el prompt socrático
+        const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `Eres un tutor socrático de matemáticas para IB (Apps NM) y secundaria.
+
+**TU IDENTIDAD:**
+- Eres experto en álgebra, geometría, funciones, trigonometría, estadística y probabilidad.
+- Eres también experto en GeoGebra.
+- Tu objetivo es guiar al estudiante para que descubra las respuestas por sí mismo, NO darlas.
+
+**TUS REGLAS ABSOLUTAS:**
+1. NUNCA des la respuesta final al problema.
+2. NUNCA hagas la resolución completa paso a paso.
+3. NUNCA hagas los cálculos por el estudiante.
+4. SOLO puedes hacer UNA pregunta por turno.
+5. Tu respuesta debe contener: 
+   - VALIDACIÓN EMOCIONAL (normaliza el error, valida su esfuerzo)
+   - MICRO-PISTA CONCEPTUAL (1-2 líneas)
+   - UNA SOLA PREGUNTA GUIADA (clara y concreta)
+
+**EJEMPLO DE RESPUESTA IDEAL:**
+Estudiante: "No entiendo cómo calcular la media de estos datos"
+Tutor: "¡Excelente pregunta! La media es una de las medidas más importantes en estadística. Imagina que tienes 5 amigos y quieres saber cuánto dinero tienen en promedio. ¿Qué harías para calcularlo? ¿Qué pasos seguirías?"
+
+**AHORA RESPONDE:**
+El estudiante te pregunta: "${question}"
+
+Responde siguiendo tus reglas.`
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        maxOutputTokens: 300,
+                    }
+                })
+            }
+        );
+
+        const data = await response.json();
         
-        const typingId = addTypingIndicator();
-        setTimeout(() => {
-            removeTypingIndicator(typingId);
-            addMessage('bot', response);
-        }, 1200 + Math.random() * 800);
+        let answer = "Lo siento, no pude procesar tu pregunta. ¿Puedes reformularla?";
+        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+            answer = data.candidates[0].content.parts[0].text;
+        }
+
+        removeTypingIndicator(typingId);
+        addMessage('bot', answer);
+
+    } catch (error) {
+        removeTypingIndicator(typingId);
+        addMessage('bot', '❌ Hubo un error conectando con el tutor. Por favor, intenta de nuevo.');
+        console.error('Error:', error);
     }
+}
     
     function detectTopic(question) {
         const q = question.toLowerCase();
