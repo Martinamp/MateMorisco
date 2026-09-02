@@ -562,7 +562,7 @@
 
     // ---- ESTADO ----
     let isConnected = false;
-    let apiKey = 'AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA';
+    let apiKey = '';
     let isProcessing = false;
     let chatHistory = [];
     let geogebraStep = 0;
