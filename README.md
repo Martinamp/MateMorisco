@@ -321,7 +321,7 @@
         }
 
         .btn-primary:hover {
-            background: #d4951e;
+            background: #c4881c;
             transform: scale(1.02);
             box-shadow: 0 0 24px rgba(245, 166, 35, 0.25);
         }
@@ -450,7 +450,7 @@
     // ============================================================
 
     // ---- 🔑 PON AQUÍ TU CLAVE DE API DE GEMINI ----
-    const API_KEY = 'AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA';
+    const API_KEY = 'TU_CLAVE_AQUI';
     // =====================================================
 
     // ---- ESTADO ----
@@ -542,14 +542,15 @@
         input.disabled = false;
         input.focus();
     }
-// ---- LLAMADA A LA API DE GEMINI ----
-async function callGeminiAPI(question, isConfused, isGeoGebra, topic) {
-    // Verificar que la clave esté configurada
-    if (!API_KEY || API_KEY === 'AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA') {
-        throw new Error('🔑 No se ha configurado la clave de API. Edita el código y pon tu clave en la variable API_KEY.');
-    }
 
-    let prompt = `Eres un tutor Socrático de matemáticas para educación secundaria. Eres también un EXPERTO en el software GeoGebra.
+    // ---- LLAMADA A LA API DE GEMINI (VERSIÓN CORREGIDA) ----
+    async function callGeminiAPI(question, isConfused, isGeoGebra, topic) {
+        // Verificar que la clave esté configurada
+        if (!API_KEY || API_KEY === 'AQ.Ab8RN6IRQjXRQdd_Q112bgQVpKLuVwMo3aCBLKPqQHYBpmDbiA') {
+            throw new Error('🔑 No se ha configurado la clave de API. Edita el código y pon tu clave en la variable API_KEY.');
+        }
+
+        let prompt = `Eres un tutor Socrático de matemáticas para educación secundaria. Eres también un EXPERTO en el software GeoGebra.
 
     TU IDENTIDAD:
     - Enseñas álgebra, geometría, funciones, trigonometría, estadística y probabilidad.
@@ -576,109 +577,109 @@ async function callGeminiAPI(question, isConfused, isGeoGebra, topic) {
        - "Escribe: Circunferencia(O, radio)"
     4. Pregunta: "Si arrastras el punto A, ¿qué observas?"`;
 
-    if (isGeoGebra) {
-        prompt += `
+        if (isGeoGebra) {
+            prompt += `
 
     📐 **EL ESTUDIANTE QUIERE USAR GEOGEBRA.**
     - Da instrucciones PASO A PASO.
     - Sé específico con las herramientas y comandos.
     - Pregunta qué observa al manipular la construcción.`;
-    }
+        }
 
-    if (isConfused) {
-        prompt += `
+        if (isConfused) {
+            prompt += `
 
     ⚠️ **EL ESTUDIANTE ESTÁ CONFUNDIDO.**
     - Valida su esfuerzo: "Es normal sentirse así, las matemáticas son desafiantes."
     - Simplifica el problema.
     - Usa una analogía de la vida cotidiana.`;
-    }
+        }
 
-    if (topic) {
-        prompt += `
+        if (topic) {
+            prompt += `
 
     TEMA DETECTADO: ${topic}
     - Adapta tus preguntas a este tema específico.
     - Si es geometría o funciones, usa GeoGebra.`;
-    }
+        }
 
-    if (chatHistory.length > 0) {
-        prompt += `
+        if (chatHistory.length > 0) {
+            prompt += `
 
     HISTORIAL DE CONVERSACIÓN:
     ${chatHistory.slice(-6).join('\n')}`;
-    }
+        }
 
-    prompt += `
+        prompt += `
 
     La pregunta del estudiante es: "${question}"
 
     Responde SIGUIENDO ESTRICTAMENTE las reglas. Solo haz UNA pregunta. NO des respuestas directas.`;
 
-    try {
-        // --- USAR EL MODELO CORRECTO: gemini-pro ---
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: prompt }] }],
-                    generationConfig: {
-                        temperature: 0.8,
-                        maxOutputTokens: 600,
-                        topK: 1,
-                        topP: 1
-                    }
-                })
-            }
-        );
+        try {
+            // --- USAR EL MODELO CORRECTO: gemini-pro ---
+            const response = await fetch(
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: {
+                            temperature: 0.8,
+                            maxOutputTokens: 600,
+                            topK: 1,
+                            topP: 1
+                        }
+                    })
+                }
+            );
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            let errorMsg = 'Error en la API';
-            if (errorData.error && errorData.error.message) {
-                errorMsg = errorData.error.message;
-            }
-            throw new Error(errorMsg);
-        }
-
-        const data = await response.json();
-
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-            let text = data.candidates[0].content.parts[0].text;
-
-            text = text
-                .replace(/^Validación Emocional:\s*/gm, '')
-                .replace(/^Micro-pista:\s*/gm, '')
-                .replace(/^Pregunta:\s*/gm, '')
-                .trim();
-
-            if (!text.includes('❓') && !text.includes('?') && !text.includes('¿')) {
-                text += '\n\n❓ ¿Qué crees que deberías hacer primero?';
+            if (!response.ok) {
+                const errorData = await response.json();
+                let errorMsg = 'Error en la API';
+                if (errorData.error && errorData.error.message) {
+                    errorMsg = errorData.error.message;
+                }
+                throw new Error(errorMsg);
             }
 
-            chatHistory.push(`Estudiante: ${question}`);
-            chatHistory.push(`Tutor: ${text.substring(0, 80)}...`);
+            const data = await response.json();
 
-            if (chatHistory.length > 10) {
-                chatHistory.splice(0, 2);
+            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                let text = data.candidates[0].content.parts[0].text;
+
+                text = text
+                    .replace(/^Validación Emocional:\s*/gm, '')
+                    .replace(/^Micro-pista:\s*/gm, '')
+                    .replace(/^Pregunta:\s*/gm, '')
+                    .trim();
+
+                if (!text.includes('❓') && !text.includes('?') && !text.includes('¿')) {
+                    text += '\n\n❓ ¿Qué crees que deberías hacer primero?';
+                }
+
+                chatHistory.push(`Estudiante: ${question}`);
+                chatHistory.push(`Tutor: ${text.substring(0, 80)}...`);
+
+                if (chatHistory.length > 10) {
+                    chatHistory.splice(0, 2);
+                }
+
+                return text;
+            } else {
+                throw new Error('No se pudo obtener una respuesta de la IA.');
             }
-
-            return text;
-        } else {
-            throw new Error('No se pudo obtener una respuesta de la IA.');
+        } catch (error) {
+            if (error.message.includes('API key')) {
+                throw new Error('Clave de API inválida. Verifica tu clave en el código.');
+            }
+            if (error.message.includes('model')) {
+                throw new Error('Error con el modelo. Intenta con: gemini-1.0-pro');
+            }
+            throw error;
         }
-    } catch (error) {
-        if (error.message.includes('API key')) {
-            throw new Error('Clave de API inválida. Verifica tu clave en el código.');
-        }
-        if (error.message.includes('model')) {
-            throw new Error('Error con el modelo. Probando modelo alternativo...');
-        }
-        throw error;
     }
-}
 
     // ---- FUNCIONES DEL CHAT ----
     function addMessage(sender, text) {
